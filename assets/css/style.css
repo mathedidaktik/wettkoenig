@@ -1,0 +1,77 @@
+.button{
+  background-color: #17365c;
+  color:white;
+}
+
+.input{
+  background-color: #e7e7e7;
+}
+  
+.chart {
+  flex-grow: 1;
+  max-width: calc(100% - 250px);
+}
+
+/*canvas {
+  width: 100% !important;
+  height: 100% !important;
+}*/
+
+.blueInput {
+  background-color: rgba(0, 53, 96, 0.2);
+  border: 3px solid rgba(0, 53, 96, 1);
+  padding: 3px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-bottom: 5px;
+  border-radius: 20px;
+
+}
+
+.redInput {
+  background-color: rgba(230, 51, 42, 0.2);
+  border: 3px solid rgba(230, 51, 42, 1);
+  padding: 3px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-bottom: 5px;
+  border-radius: 20px;
+}
+
+.yellowInput {
+  background-color: rgba(255, 204, 0, 0.2);
+  border: 3px solid rgba(255, 204, 0, 1);
+  padding: 3px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-bottom: 5px;
+  border-radius: 20px;
+
+}
+
+.lableContainer {
+  width: fit-content;
+}
+
+
+@media screen and (orientation: portrait) {
+  .flex-wrap {
+    flex-direction: column;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+}
+
+figure {
+  position: relative;
+  flex-grow: 2;
+  min-height: 0;
+  display: flex;
+}
+
+html,body, #__nuxt, #__layout{
+  height:100%!important;
+  width: 100%!important;
+}
