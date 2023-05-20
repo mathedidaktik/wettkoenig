@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  wettlauf2:                                                                                                 # CHANGE
+    container_name: wettlauf2                                                                                # CHANGE
+    image: repo.studienprojekt-mathe-lernen.de/wettlauf2                                                     # CHANGE
+    restart: always
+    networks:
+      - global_traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=global_traefik"
+      - "traefik.http.routers.wettlauf2.entrypoints=websecure"                                               # CHANGE
+      - "traefik.http.routers.wettlauf2.rule=Host(`wettlauf2.studienprojekt-mathe-lernen.de`)"                  # CHANGE
+
+networks:
+  global_traefik:
+    external: true
