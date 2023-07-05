@@ -1,7 +1,10 @@
 <template>
     <div class="flex flex-col space-y-8">
-        <button @click="changeDiceMode" class="button text-white rounded-md px-4 py-2" v-if="!useDiyDice">Baue deinen eingenen Würfel</button>
-        <button @click="changeDiceMode" class="button text-white rounded-md px-4 py-2" v-if="useDiyDice">Nutze fertige Würfel</button>
+        <select ref="diceSelect" id="diceChooser" :onChange="setDiceSides" class="border-gray-300 border rounded-md px-3 py-2 w-full" v-if="!useDiyDice">
+            <option value="nodice">Würfel wählen</option>
+            <option value="dice1">Weißer 10er Würfel</option>
+            <option value="dice2">Schwarzer 20er Würfel</option>
+        </select>
 
         <div class="flex flex-col items-start">
             <label for="num-rolls" class="text-lg font-medium">Anzahl Würfe:</label>
@@ -9,11 +12,6 @@
             <label v-if="warningRolls" class="text-red-700">Es Muss mindestens einen Wurf und maximal 1000000 Würfe geben.</label>
         </div>
 
-        <select ref="diceSelect" id="diceChooser" :onChange="setDiceSides" class="border-gray-300 border rounded-md px-3 py-2 w-full" v-if="!useDiyDice">
-            <option value="nodice">Würfel wählen</option>
-            <option value="dice1">Weißer 10er Würfel</option>
-            <option value="dice2">Schwarzer 20er Würfel</option>
-        </select>
 
         <div ref="container" class="space-y-4 lableContainer">
             <div v-if="!useDiyDice">
@@ -34,6 +32,8 @@
             <button id="less-colors" @click="AdjustColorCount('less')" class="button text-white rounded-md px-4 py-2" v-if="useDiyDice && sidesInputsCount >= 4">Weniger Farben</button>
 
         </div>
+        <button @click="changeDiceMode" class="button text-white rounded-md px-4 py-2" v-if="!useDiyDice">Baue deinen eigenen Würfel</button>
+        <button @click="changeDiceMode" class="button text-white rounded-md px-4 py-2" v-if="useDiyDice">Nutze fertige Würfel</button>
     </div>
 </template>
 
@@ -193,6 +193,7 @@
             this.setSidesByColor('pink', 0);
             this.setSidesByColor('black', 0);
 
+            //if(!this.useDiyDice) sidesindex = 3
             this.$emit('dice-changed', this.id);
 
         },

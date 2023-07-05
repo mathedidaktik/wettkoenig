@@ -2,24 +2,26 @@
 
     <div id="x-top-level-container" class="flex h-full w-full flex-wrap flex-row justify-between">
         <div id="y-dice-control-container" class="flex flex-col grow w-full lg:w-1/5 xl:w-1/5 p-4">
-            <button @click="secondDiceCheck" class="button text-white rounded-md px-4 p-4 m-0" v-if="!secondDice">Nutze zwei Würfel</button>
-            <button @click="secondDiceCheck" class="button text-white rounded-md px-4 p-4 m-0" v-if="secondDice">Nutze einen Würfel</button>
+
             <div id="x-dices-container" class="flex flex-row space-x-4 mt-1">
                 <div class="y-dice-container flex flex-col grow lg:w-1/2 xl:w-1/2">
-                    <Dice ref="dice1" :id="0" @dice-changed="setTableToZero" />
+                    <Dice ref="dice1" :id="0" @dice-changed="setTableToZero"></Dice>
                     <div class="flex flex-col space-y-8">
-                        <button type="button" @click="rollDice1" class="button text-white rounded-md px-4 py-2 mt-4">Roll Dice</button>    
+                        <button type="button" @click="rollDice1" class="button text-white rounded-md px-4 py-2 mt-4 mb-4">Würfeln</button>    
                     </div>
                 </div>
                 
                 <div class="y-dice-container flex flex-col grow lg:w-1/2 xl:w-1/2" v-if="secondDice">
-                    <Dice ref="dice2" :id="1" @dice-changed="setTableToZero" />
-                    <div class="flex flex-col space-y-8">
-                        <button type="button" @click="rollDice2" class="button text-white rounded-md px-4 py-2 mt-4">Roll Dice</button>
-                    </div>
+                    <Dice ref="dice2" :id="1" @dice-changed="setTableToZero"><div class="flex flex-col space-y-8">
+                        <button type="button" @click="rollDice2" class="button text-white rounded-md px-4 py-2 mt-4 mb-4">Würfeln</button>
+                    </div></Dice>
+                    
                 </div>
             </div>
+            <button @click="secondDiceCheck" class="button text-white rounded-md px-4 p-4 m-0" v-if="!secondDice">Nutze zwei Würfel</button>
+            <button @click="secondDiceCheck" class="button text-white rounded-md px-4 p-4 m-0" v-if="secondDice">Nutze einen Würfel</button>
         </div>
+        
         <div id="canvas-container" class="w-full lg:w-3/5 xl:w-3/5 p-4 flex min-h-0 relative grow flex-col">
             <button type="button" @click="changeChart" class="button text-white rounded-md px-4 py-2 m-0">Layout ändern</button>
             <figure>
@@ -116,39 +118,60 @@ export default{
         },
         methods: {
             secondDiceCheck() {
+                let dice2 = this.$refs.dice2;
+                if (dice2) {
+                    dice2.sidesInputsCount = 3;
+                }
                 this.secondDice = !this.secondDice;
                 this.setTableToZero(1);
+                
             },
             setTableToZero(diceId) {
-                if (diceId == 0) {
-                    this.myChart.data.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0];
-                    this.myChart.update();
-                }
-                else if (diceId == 1) {
-                    this.myChart.data.datasets[1].data = [0, 0, 0, 0, 0, 0, 0, 0];
-                    this.myChart.update();
-                }
+                
+                this.myChart.data.datasets[diceId].data = [0, 0, 0, 0, 0, 0, 0, 0];
+                this.myChart.update();
+        
             },
             displayChart(rolls, numberOfRolls , datasetIndex) {
             // Generate data for the chart based on rolls
-                var newData = [
-                        ((rolls.filter(roll => roll === 'red').length) / numberOfRolls) * 100,
-                        ((rolls.filter(roll => roll === 'yellow').length) / numberOfRolls) * 100,
-                        ((rolls.filter(roll => roll === 'blue').length) / numberOfRolls) * 100,
-                        ((rolls.filter(roll => roll === 'lightblue').length) / numberOfRolls) * 100,
-                        ((rolls.filter(roll => roll === 'green').length) / numberOfRolls) * 100,
-                        ((rolls.filter(roll => roll === 'orange').length) / numberOfRolls) * 100,
-                        ((rolls.filter(roll => roll === 'pink').length) / numberOfRolls) * 100,
-                        ((rolls.filter(roll => roll === 'black').length) / numberOfRolls) * 100,
-                    ]
+                let sidesCount = 0;
 
+                let dice1 = this.$refs.dice1;
+                if(this.secondDice) {
+                    let dice2 = this.$refs.dice2;
+            
+                    if (dice1.sidesInputsCount < dice2.sidesInputsCount){
+                        sidesCount = dice2.sidesInputsCount;
+                    }
+                    else {
+                        sidesCount = dice1.sidesInputsCount;
+                    }
+                } 
+                else {sidesCount = dice1.sidesInputsCount;}
+
+                var allData = [
+                {rank: 1, label: 'Rot', value: ((rolls.filter(roll => roll === 'red').length) / numberOfRolls) * 100},
+                {rank: 2, label: 'Gelb', value: ((rolls.filter(roll => roll === 'yellow').length) / numberOfRolls) * 100},
+                {rank: 3, label: 'Blau', value: ((rolls.filter(roll => roll === 'blue').length) / numberOfRolls) * 100},
+                {rank: 4, label: 'Hellblau', value: ((rolls.filter(roll => roll === 'lightblue').length) / numberOfRolls) * 100},
+                {rank: 5, label: 'Grün', value: ((rolls.filter(roll => roll === 'green').length) / numberOfRolls) * 100},
+                {rank: 6, label: 'Orange', value: ((rolls.filter(roll => roll === 'orange').length) / numberOfRolls) * 100},
+                {rank: 7, label: 'Pink', value: ((rolls.filter(roll => roll === 'pink').length) / numberOfRolls) * 100},
+                {rank: 8, label: 'Schwarz', value: ((rolls.filter(roll => roll === 'black').length) / numberOfRolls) * 100},
+                ]
+
+                var newData = allData.filter(data => data.rank <= sidesCount).map(data => data.value);
+                var newLabels = allData.filter(data => data.rank <= sidesCount).map(data => data.label);
+
+                this.myChart.data.labels = newLabels;
                 this.myChart.data.datasets[datasetIndex].data = newData;
-                
-                this.myChart.update();
+
+                this.myChart.update();   
                     
             },
             rollDice1() {
                 let dice1 = this.$refs.dice1;
+
                 if (dice1.warningRolls | dice1.warningSites) {
                     this.displayChart([], 0, 0);
                     return;
@@ -159,6 +182,7 @@ export default{
 
             rollDice2(){
                 let dice2 = this.$refs.dice2;
+
                 if (dice2.warningRolls | dice2.warningSites) {
                     this.displayChart([], 0, 1);
                     return;
