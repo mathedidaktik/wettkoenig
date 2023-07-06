@@ -12,6 +12,10 @@
             <label v-if="warningRolls" class="text-red-700">Es Muss mindestens einen Wurf und maximal 1000000 Würfe geben.</label>
         </div>
 
+        <div class="flex flex-col space-y-8">
+            <button type="button" @click="diceRolled" class="button text-white rounded-md px-4 py-2 mt-4 mb-2">Würfeln</button>
+        </div>
+
 
         <div ref="container" class="space-y-4 lableContainer">
             <div v-if="!useDiyDice">
@@ -28,8 +32,8 @@
 
             <DiceSides @sides-changed="setSides" @warning-sites="warningSitesChange" v-if="useDiyDice" v-for="index in sidesInputsCount" :text="this.diceSidesInfo[index - 1]['text']" :classColor="this.diceSidesInfo[index - 1]['classColor']"></DiceSides>
 
-            <button id="more-colors" @click="AdjustColorCount('more')" class="button text-white rounded-md px-4 py-2" v-if="useDiyDice && sidesInputsCount < 8">Mehr Farben</button>
-            <button id="less-colors" @click="AdjustColorCount('less')" class="button text-white rounded-md px-4 py-2" v-if="useDiyDice && sidesInputsCount >= 4">Weniger Farben</button>
+            <button id="more-colors" @click="AdjustColorCount('more')" class="button text-white rounded-md px-4 py-2 mr-2" v-if="useDiyDice && sidesInputsCount < 8">Mehr Farben</button>
+            <button id="less-colors" @click="AdjustColorCount('less')" class="button text-white rounded-md px-4 py-2 ml-2" v-if="useDiyDice && sidesInputsCount >= 4">Weniger Farben</button>
 
         </div>
         <button @click="changeDiceMode" class="button text-white rounded-md px-4 py-2" v-if="!useDiyDice">Baue deinen eigenen Würfel</button>
@@ -73,6 +77,14 @@
       }
     },
     methods: {
+        diceRolled() {
+            if (this.id == 0) {
+                this.$emit('rollDice1');
+            }
+            else {
+                this.$emit('rollDice2');
+            }
+        },
         setSides(text, sides) {
             const diceInfo = this.diceSidesInfo.find((info) => info.text === text);
             if(diceInfo) {
@@ -115,7 +127,8 @@
 
         },
         enforceMinMax() {
-            if (this.numberOfRolls < 0 | this.numberOfRolls > 1000000) {
+            
+            if (this.numberOfRolls < 0 | this.numberOfRolls > 1000000 | !this.numberOfRolls & this.numberOfRolls != "0") {
                 this.warningRolls = true;
             } 
             else {
@@ -123,7 +136,7 @@
             }
         },
         warningSitesChange(sides) {
-            if(sides > 1000) {
+            if(sides < 0 | sides > 1000 | !sides & sides != "0") {
                 this.warningSites = true;
             }
             else {

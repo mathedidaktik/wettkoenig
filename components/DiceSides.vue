@@ -17,7 +17,7 @@
         },
         methods: {
             enforceMinMax() {
-                if (this.sides < 0 | this.sides > 1000) {
+                if (this.sides < 0 | this.sides > 1000 | !this.sides & this.sides != "0") {
                     this.warningSites = true;
                 }
                 else {
