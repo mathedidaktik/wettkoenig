@@ -98,7 +98,7 @@
         setSidesByColor(color, value) {
             const diceInfo = this.diceSidesInfo.find((info) => info.color === color);
             if(diceInfo) {
-                diceInfo.sides = value;
+                diceInfo.sides = value;   
             }
         },
         setSidesByRank(rank, value) {
@@ -121,8 +121,8 @@
                 this.sidesInputsCount++;
             }
             else if (value == "less" && this.sidesInputsCount > 3){
+                this.setSidesByRank(this.sidesInputsCount - 1, 0)
                 this.sidesInputsCount--;
-                this.setSidesByRank(this.sidesInputsCount, 0)
             }
 
         },
@@ -146,7 +146,7 @@
         rollDice() {
             const rolls = [];
 
-            if (this.warningRolls |this.warningSites) {
+            if (this.warningRolls || this.warningSites) {
                 this.rolls = rolls;
                 return;
             }
