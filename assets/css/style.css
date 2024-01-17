@@ -14,8 +14,8 @@
 
 
 .blueInput {
-  background-color: rgba(0, 114, 178, 0.3);
-  border: 3px solid rgba(0, 114, 178, 1);
+  background-color: rgba(58, 105, 245, 1);
+  border: 3px solid rgba(0, 0, 0, 1);
   padding: 3px;
   padding-left: 8px;
   padding-right: 8px;
@@ -25,8 +25,8 @@
 }
 
 .redInput {
-  background-color: rgba(213, 94, 0, 0.4);
-  border: 3px solid rgba(213, 94, 0, 1);
+  background-color: rgba(235, 50, 36, 1);
+  border: 3px solid rgba(0, 0, 0, 1);
   padding: 3px;
   padding-left: 8px;
   padding-right: 8px;
@@ -35,19 +35,8 @@
 }
 
 .yellowInput {
-  background-color: rgba(240, 228, 66, 0.2);
-  border: 3px solid rgba(240, 228, 66, 1);
-  padding: 3px;
-  padding-left: 8px;
-  padding-right: 8px;
-  margin-bottom: 5px;
-  border-radius: 20px;
-
-}
-
-.lightblueInput {
-  background-color: rgba(86, 180, 233, 0.5);
-  border: 3px solid rgba(86, 180, 233, 1);
+  background-color: rgba(254, 253, 86, 1);
+  border: 3px solid rgba(0, 0, 0, 1);
   padding: 3px;
   padding-left: 8px;
   padding-right: 8px;
@@ -57,40 +46,7 @@
 }
 
 .greenInput {
-  background-color: rgba(0, 158, 115, 0.5);
-  border: 3px solid rgba(0, 158, 115, 1);
-  padding: 3px;
-  padding-left: 8px;
-  padding-right: 8px;
-  margin-bottom: 5px;
-  border-radius: 20px;
-
-}
-
-.orangeInput {
-  background-color: rgba(230, 159, 0, 0.5);
-  border: 3px solid rgba(230, 159, 0, 1);
-  padding: 3px;
-  padding-left: 8px;
-  padding-right: 8px;
-  margin-bottom: 5px;
-  border-radius: 20px;
-
-}
-
-.pinkInput {
-  background-color: rgba(204, 121, 167, 0.5);
-  border: 3px solid rgba(204, 121, 167, 1);
-  padding: 3px;
-  padding-left: 8px;
-  padding-right: 8px;
-  margin-bottom: 5px;
-  border-radius: 20px;
-
-}
-
-.blackInput {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(117, 249, 78, 1);
   border: 3px solid rgba(0, 0, 0, 1);
   padding: 3px;
   padding-left: 8px;
