@@ -1,7 +1,7 @@
 <template>
-    <dev class="flex w-full flex-wrap flex-row justify-between">
+    <div class="header-container flex w-full flex-wrap flex-row justify-between">
         <label class="w-full button text-white rounded-md px-4 p-4 m-0 mt-2 ml-4 mr-4 text-center text-3xl">Wettlauf</label>
-    </dev>
+    </div>
     <div id="x-top-level-container" class="flex h-full w-full flex-wrap flex-row justify-between">
         <div id="y-dice-control-container" class="flex flex-col grow w-full lg:w-1/5 xl:w-1/5 p-4">
             <div id="x-dices-container" class="flex flex-row space-x-4 mt-1">
@@ -11,9 +11,9 @@
             </div>
         </div>
         
-        <div id="canvas-container" class="w-full lg:w-3/5 xl:w-3/5 p-4 flex min-h-0 relative grow flex-col">
+        <div id="canvas-container" class="w-full lg:w-3/5 xl:w-3/5 p-4 flex relative flex-col">
             <figure>
-                <canvas ref="myChart" class="w-full h-full mt-1"></canvas>
+                <canvas ref="myChart" class="w-full h-full mt-1 chart"></canvas>
             </figure>
 
         </div>

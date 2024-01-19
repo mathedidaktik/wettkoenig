@@ -11,20 +11,45 @@
             <button type="button" @click="diceRolled" class="button text-white rounded-md px-4 py-2 mt-4 mb-2">Würfeln</button>
         </div>
 
-        <div ref="container" class="space-y-4 lableContainer">
+        <div ref="container" class="space-y-2 lableContainer">
+            <label>Auf dem Würfel sind:</label>
             <div>
-                <label class="text-lg font-medium redInput w-full block">Rote Seiten: {{ 7 }}</label>
+                <label class="text-lg font-medium redInput w-full block">{{ 7 }} Rote Seiten</label>
             </div>
             <div>
-                <label class="text-lg font-medium greenInput w-full block">Grüne Seiten: {{ 5 }}</label>
+                <label class="text-lg font-medium greenInput w-full block">{{ 5 }} Grüne Seiten</label>
             </div>
             <div>
-                <label class="text-lg font-medium yellowInput w-full block">Gelbe Seiten: {{ 5 }}</label>
+                <label class="text-lg font-medium yellowInput w-full block">{{ 5 }} Gelbe Seiten</label>
             </div>
             <div>
-                <label class="text-lg font-medium blueInput w-full block">Blaue Seiten: {{ 3 }}</label>
+                <label class="text-lg font-medium blueInput w-full block">{{ 3 }} Blaue Seiten</label>
             </div>
-
+        </div>
+        <div class="table-container">
+            <div class="row-descriptions">
+                <div>Tiere</div>
+                <div>Stand</div>
+                <div>Absolut</div>
+            </div>
+            <table class="dice-table">
+                <thead>
+                    <tr>
+                        <th class="ameise">Ameise</th>
+                        <th class="frosch">Frosch</th>
+                        <th class="schnecke">Schnecke</th>
+                        <th class="igel">Igel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(row, index) in diceResults" :key="index">
+                        <td>{{ row.ameise }}</td>
+                        <td>{{ row.frosch }}</td>
+                        <td>{{ row.schnecke }}</td>
+                        <td>{{ row.igel }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </template>
@@ -47,6 +72,10 @@
             {rank: 1, color:'green', text: 'Grüne Seiten: ', classColor: 'greenInput' , sides: 5},
             {rank: 2, color:'yellow', text: 'Gelbe Seiten: ', classColor: 'yellowInput' , sides: 5},
             {rank: 3, color:'blue', text: 'Blaue Seiten: ', classColor: 'blueInput' , sides: 3},
+        ],
+        diceResults: [
+            { ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
+            { ameise: 0, frosch: 0, schnecke: 0, igel: 0 }
         ]
         }
     },
@@ -78,6 +107,18 @@
                 }
             }
             this.rolls = rolls
+
+            this.diceResults[0].ameise = (rolls.filter(roll => roll === 'red').length);
+            this.diceResults[0].frosch = (rolls.filter(roll => roll === 'green').length);
+            this.diceResults[0].schnecke = (rolls.filter(roll => roll === 'yellow').length);
+            this.diceResults[0].igel = (rolls.filter(roll => roll === 'blue').length);
+
+            this.diceResults[1].ameise =  this.diceResults[1].ameise + (rolls.filter(roll => roll === 'red').length);
+            this.diceResults[1].frosch = this.diceResults[1].frosch + (rolls.filter(roll => roll === 'green').length);
+            this.diceResults[1].schnecke = this.diceResults[1].schnecke + (rolls.filter(roll => roll === 'yellow').length);
+            this.diceResults[1].igel = this.diceResults[1].igel  + (rolls.filter(roll => roll === 'blue').length);
+ 
+
             this.$emit('rollDice');
         },
         enforceMinMax() {

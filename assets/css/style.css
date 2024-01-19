@@ -9,7 +9,6 @@
   
 .chart {
   flex-grow: 1;
-  max-width: calc(100% - 250px);
 }
 
 
@@ -21,7 +20,7 @@
   padding-right: 8px;
   margin-bottom: 5px;
   border-radius: 20px;
-
+  text-align: center;
 }
 
 .redInput {
@@ -32,6 +31,7 @@
   padding-right: 8px;
   margin-bottom: 5px;
   border-radius: 20px;
+  text-align: center;
 }
 
 .yellowInput {
@@ -42,7 +42,7 @@
   padding-right: 8px;
   margin-bottom: 5px;
   border-radius: 20px;
-
+  text-align: center;
 }
 
 .greenInput {
@@ -53,18 +53,21 @@
   padding-right: 8px;
   margin-bottom: 5px;
   border-radius: 20px;
-
+  text-align: center;
 }
 
 .lableContainer {
   width: fit-content;
 }
 
+.header-container {
+  max-height: 10vh;
+}
+
 
 figure {
   position: relative;
   flex-grow: 2;
-  min-height: 0;
   display: flex;
 }
 
@@ -74,7 +77,41 @@ html,body, #__nuxt, #__layout{
 }
 
 #x-top-level-container {
-  width: 100% !important;
-  min-width: 100% !important;
-  max-width: 100% !important;
+  max-height: 90vh;
+}
+
+.ameise {
+  background-color: rgba(235, 50, 36, 1);
+}
+
+.frosch {
+  background-color: rgba(117, 249, 78, 1);
+}
+
+.schnecke {
+  background-color: rgba(254, 253, 86, 1);
+}
+
+.igel {
+  background-color: rgba(58, 105, 245, 1);
+}
+
+.dice-table {
+  width: 100%;
+  table-layout: fixed; 
+}
+
+.dice-table th, .dice-table td {
+  width: 25%; 
+}
+
+.table-container {
+  display: flex;
+}
+
+.row-descriptions {
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
