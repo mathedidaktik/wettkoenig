@@ -1,12 +1,18 @@
 <template>
-    <div class="header-container flex w-full flex-wrap flex-row justify-between">
-        <label class="w-full button text-white rounded-md px-4 p-4 m-0 mt-2 ml-4 mr-4 text-center text-3xl">Wettlauf</label>
+    <div class="header-container flex w-full">
+        <div class="buttons-container flex flex-row rounded-md px-4 p-4 m-0 mt-2 ml-4 mr-2">
+            <button class="button-top" @click="easy">Einfach</button>
+            <button class="button-top" @click="total">Absolut</button>
+            <button class="button-top" @click="percent">Prozent</button>
+        </div>
+        <label class="lable w-full text-white rounded-md px-4 p-4 m-0 mt-2 ml-2 mr-4 text-center text-3xl">Wettlauf</label>
     </div>
+
     <div id="x-top-level-container" class="flex h-full w-full flex-wrap flex-row justify-between">
         <div id="y-dice-control-container" class="flex flex-col grow w-full lg:w-1/5 xl:w-1/5 p-4">
             <div id="x-dices-container" class="flex flex-row space-x-4 mt-1">
                 <div class="y-dice-container flex flex-col grow lg:w-1/2 xl:w-1/2">
-                    <Dice ref="dice" @rollDice="rollDice"></Dice>
+                    <Dice :default="modeData" ref="dice" @rollDice="rollDice"></Dice>
                 </div>
             </div>
         </div>
@@ -26,11 +32,13 @@
     import { Chart } from 'chart.js/auto';
     import { Bundle } from 'magic-string';
     import lodash from "lodash";
+    import { Mode } from '../assets/enum/mode.js';
 
   
 export default{
         data() {
             return {
+                modeData: Mode.NONE,
                 chartHorizontal: true,
                 chart: null,
                 chartData: {
@@ -75,7 +83,6 @@ export default{
                         },
                         title: {
                             display: true,
-                            text: "Häufigkeitsverteilung",
                             color: "black",
                             font: {
                                 family: "'Arial', 'Helvetica', 'sans-serif'",
@@ -106,6 +113,15 @@ export default{
             }
         },
         methods: {
+            easy() {
+                this.modeData = Mode.EASY;
+            },
+            total() {
+                this.modeData = Mode.TOTAL;
+            },
+            percent() {
+                this.modeData = Mode.PERCENT;
+            },
             updateChart() {
                 let dice = this.$refs.dice;
                 if (( dice.numberOfRolls == 1)) {

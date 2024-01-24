@@ -4,7 +4,8 @@
         <div class="flex flex-col items-start">
             <label for="num-rolls" class="text-lg font-medium">Anzahl Würfe:</label>
             <input type="number" id="num-rolls" class="border-gray-300 border rounded-md px-3 py-2 w-full" min="1" max="1000000" v-bind:keyup=enforceMinMax() v-model="numberOfRolls">
-            <label v-if="warningRolls" class="text-red-700">Es Muss mindestens einen Wurf und maximal 1000000 Würfe geben.</label>
+            <label v-if="warningRollsLow" class="text-red-700">Du musst mindestens 1 eingeben.</label>
+            <label v-if="warningRollsHigh" class="text-red-700">Du darfst maximal 1.000.000 eingeben.</label>
         </div>
 
         <div class="flex flex-col space-y-8">
@@ -14,23 +15,33 @@
         <div ref="container" class="space-y-2 lableContainer">
             <label>Auf dem Würfel sind:</label>
             <div>
-                <label class="text-lg font-medium redInput w-full block">{{ 7 }} Rote Seiten</label>
+                <label class="text-lg font-medium redInput w-full block">{{ 7 }} rote Seiten</label>
             </div>
             <div>
-                <label class="text-lg font-medium greenInput w-full block">{{ 5 }} Grüne Seiten</label>
+                <label class="text-lg font-medium greenInput w-full block">{{ 5 }} grüne Seiten</label>
             </div>
             <div>
-                <label class="text-lg font-medium yellowInput w-full block">{{ 5 }} Gelbe Seiten</label>
+                <label class="text-lg font-medium yellowInput w-full block">{{ 5 }} gelbe Seiten</label>
             </div>
             <div>
-                <label class="text-lg font-medium blueInput w-full block">{{ 3 }} Blaue Seiten</label>
+                <label class="text-lg font-medium blueInput w-full block">{{ 3 }} blaue Seiten</label>
             </div>
         </div>
         <div class="table-container">
-            <div class="row-descriptions">
+            <div v-if="this.easy" class="row-descriptions">
+                <div>Tiere</div>
+                <div>Stand</div>
+            </div>
+            <div v-if="this.total" class="row-descriptions">
                 <div>Tiere</div>
                 <div>Stand</div>
                 <div>Absolut</div>
+            </div>
+            <div v-if="this.percent" class="row-descriptions">
+                <div>Tiere</div>
+                <div>Stand</div>
+                <div>Absolut</div>
+                <div>Prozent</div>
             </div>
             <table class="dice-table">
                 <thead>
@@ -57,16 +68,61 @@
 
 <script>
     import {defineComponent, createApp} from 'vue'
+    import { Mode } from '../assets/enum/mode.js';
     export default {
-        
+    props: {
+        default: {
+            type: String,
+            default: Mode.NONE, // Standardwert setzen
+            validator: value => Object.values(Mode).includes(value)
+        }
+    },
+
+    watch: {
+        default(newVal, oldVal) {
+            console.log('Modus geändert von', oldVal, 'zu', newVal);
+            if(oldVal == newVal) return;
+            if(newVal == Mode.EASY) {
+                this.easy = true;
+                this.total = false;
+                this.percent = false;
+
+                this.diceResults = [{ ameise: 0, frosch: 0, schnecke: 0, igel: 0 }]
+                console.log("Easy");
+            } 
+            if(newVal == Mode.TOTAL) {
+                this.total = true;
+                this.easy = false;
+                this.percent = false;
+                this.diceResults = [{ ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
+                                    { ameise: 0, frosch: 0, schnecke: 0, igel: 0 }]
+
+                console.log("Total");
+
+            } 
+            if(newVal == Mode.PERCENT) {
+                this.percent = true;
+                this.easy = false;
+                this.total = false;
+                this.diceResults = [{ ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
+                                    { ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
+                                    { ameise: 0, frosch: 0, schnecke: 0, igel: 0 }]
+
+                console.log("Percent");
+            } 
+        }
+    },
 
     data() {
         return {
-        numberOfRolls: 0,
+        easy: false,
+        total: false,
+        percent: false,
+        numberOfRolls: '',
         totalSides: 20,
         rolls: [],
-        warningRolls: false,
-        warningSites: false,
+        warningRollsHigh: false,
+        warningRollsLow: false,
         diceSidesInfo:  [
             {rank: 0, color:'red', text: 'Rote Seiten: ', classColor: 'redInput' , sides: 7},
             {rank: 1, color:'green', text: 'Grüne Seiten: ', classColor: 'greenInput' , sides: 5},
@@ -75,15 +131,16 @@
         ],
         diceResults: [
             { ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
+            { ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
             { ameise: 0, frosch: 0, schnecke: 0, igel: 0 }
-        ]
+        ],
         }
     },
     methods: {
         diceRolled() {
             const rolls = [];
 
-            if (this.warningRolls || this.warningSites) {
+            if (this.warningRollsLow || this.warningRollsHigh) {
                 this.rolls = rolls;
                 return;
             }
@@ -113,31 +170,36 @@
             this.diceResults[0].schnecke = (rolls.filter(roll => roll === 'yellow').length);
             this.diceResults[0].igel = (rolls.filter(roll => roll === 'blue').length);
 
-            this.diceResults[1].ameise =  this.diceResults[1].ameise + (rolls.filter(roll => roll === 'red').length);
-            this.diceResults[1].frosch = this.diceResults[1].frosch + (rolls.filter(roll => roll === 'green').length);
-            this.diceResults[1].schnecke = this.diceResults[1].schnecke + (rolls.filter(roll => roll === 'yellow').length);
-            this.diceResults[1].igel = this.diceResults[1].igel  + (rolls.filter(roll => roll === 'blue').length);
- 
+            if (this.total || this.percent) {
+                this.diceResults[1].ameise =  this.diceResults[1].ameise + (rolls.filter(roll => roll === 'red').length);
+                this.diceResults[1].frosch = this.diceResults[1].frosch + (rolls.filter(roll => roll === 'green').length);
+                this.diceResults[1].schnecke = this.diceResults[1].schnecke + (rolls.filter(roll => roll === 'yellow').length);
+                this.diceResults[1].igel = this.diceResults[1].igel  + (rolls.filter(roll => roll === 'blue').length);
+            }
+
+            if (this.percent) {
+                this.diceResults[2].ameise =  (((rolls.filter(roll => roll === 'red').length) / this.numberOfRolls) * 100).toFixed() + "%";
+                this.diceResults[2].frosch = (((rolls.filter(roll => roll === 'green').length) / this.numberOfRolls) * 100).toFixed() + "%";
+                this.diceResults[2].schnecke = (((rolls.filter(roll => roll === 'yellow').length) / this.numberOfRolls) * 100).toFixed() + "%";
+                this.diceResults[2].igel = (((rolls.filter(roll => roll === 'blue').length) / this.numberOfRolls) * 100).toFixed() + "%";
+            }
 
             this.$emit('rollDice');
         },
         enforceMinMax() {
             
-            if (this.numberOfRolls < 0 | this.numberOfRolls > 1000000 | !this.numberOfRolls & this.numberOfRolls != "0") {
-                this.warningRolls = true;
+            if (this.numberOfRolls > 1000000) {
+                this.warningRollsHigh = true;
             } 
-            else {
-                this.warningRolls = false;
-            }
-        },
-        warningSitesChange(sides) {
-            if(sides < 0 | sides > 1000 | !sides & sides != "0") {
-                this.warningSites = true;
+            else if ((this.numberOfRolls < 1) && (this.numberOfRolls != '')) {
+                this.warningRollsLow = true;
             }
             else {
-                this.warningSites = false;
+                this.warningRollsHigh = false;
+                this.warningRollsLow = false;
             }
         },
+
     }
 }
 </script>
