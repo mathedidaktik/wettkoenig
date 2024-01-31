@@ -73,23 +73,29 @@ html,body, #__nuxt, #__layout{
 
 .ameise {
   background-color: rgba(235, 50, 36, 1);
+  border: 1px solid;
 }
 
 .frosch {
   background-color: rgba(117, 249, 78, 1);
+  border: 1px solid;
 }
 
 .schnecke {
   background-color: rgba(254, 253, 86, 1);
+  border: 1px solid;
 }
 
 .igel {
   background-color: rgba(58, 105, 245, 1);
+  border: 1px solid;
+
 }
 
 .dice-table {
   width: 100%;
   table-layout: fixed; 
+  border: 1px solid;
 }
 
 .dice-table th, .dice-table td {
@@ -98,10 +104,12 @@ html,body, #__nuxt, #__layout{
 
 .table-container {
   display: flex;
+  align-items: center;
 }
 
 .row-descriptions {
   margin-right: 20px;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -135,3 +143,18 @@ html,body, #__nuxt, #__layout{
   position: relative;
 }
 
+.rolls {
+  margin-top: 100px;
+  margin-left: 8px;
+  max-width: 45px;
+}
+
+.dice-table {
+  width: 100%;
+}
+
+.table-head-img {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}

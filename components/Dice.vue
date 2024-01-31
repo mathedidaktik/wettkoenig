@@ -3,7 +3,7 @@
 
         <div class="flex flex-col items-start">
             <label for="num-rolls" class="text-lg font-medium">Anzahl Würfe:</label>
-            <input type="number" id="num-rolls" class="border-gray-300 border rounded-md px-3 py-2 w-full" min="1" max="1000000" v-bind:keyup=enforceMinMax() v-model="numberOfRolls">
+            <input v-on:keyup.enter="diceRolled" type="number" id="num-rolls" class="border-gray-300 border rounded-md px-3 py-2 w-full" min="1" max="1000000" v-bind:keyup=enforceMinMax() v-model="numberOfRolls" @input="removeLeadingZeros">
             <label v-if="warningRollsLow" class="text-red-700">Du musst mindestens 1 eingeben.</label>
             <label v-if="warningRollsHigh" class="text-red-700">Du darfst maximal 1.000.000 eingeben.</label>
         </div>
@@ -12,7 +12,7 @@
             <button type="button" @click="diceRolled" class="button text-white rounded-md px-4 py-2 mt-4 mb-2">Würfeln</button>
         </div>
 
-        <div ref="container" class="space-y-2 lableContainer">
+        <div v-if="this.total||this.percent" ref="container" class="space-y-2 lableContainer">
             <label>Auf dem Würfel sind:</label>
             <div>
                 <label class="text-lg font-medium redInput w-full block">{{ 7 }} rote Seiten</label>
@@ -43,24 +43,36 @@
                 <div>Absolut</div>
                 <div>Prozent</div>
             </div>
-            <table class="dice-table">
-                <thead>
-                    <tr>
-                        <th class="ameise">Ameise</th>
-                        <th class="frosch">Frosch</th>
-                        <th class="schnecke">Schnecke</th>
-                        <th class="igel">Igel</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(row, index) in diceResults" :key="index">
-                        <td>{{ row.ameise }}</td>
-                        <td>{{ row.frosch }}</td>
-                        <td>{{ row.schnecke }}</td>
-                        <td>{{ row.igel }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div>
+                <table class="dice-table">
+                    <thead>
+                        <tr>
+                            <th><img class="table-head-img" src="../assets/bilder/rot.png" width="100"></th>
+                            <th><img class="table-head-img" src="../assets/bilder/grün.png" width="100"></th>
+                            <th><img class="table-head-img" src="../assets/bilder/gelb.png" width="100"></th>
+                            <th><img class="table-head-img" src="../assets/bilder/blau.png" width="100"></th>
+                        </tr>
+                        <tr>
+                            <th class="ameise">Ameise</th>
+                            <th class="frosch">Frosch</th>
+                            <th class="schnecke">Schnecke</th>
+                            <th class="igel">Igel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(row, index) in diceResults" :key="index">
+                            <td class="ameise">{{ row.ameise }}</td>
+                            <td class="frosch">{{ row.frosch }}</td>
+                            <td class="schnecke">{{ row.schnecke }}</td>
+                            <td class="igel">{{ row.igel }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <label v-if="this.total||this.percent" class="rolls">Anzahl Würfe Insgesamt: {{ this.numberOfRollsTotal }}</label>
+        </div>
+        <div class="flex flex-col space-y-8">
+            <button v-if="this.total||this.percent" type="button" @click="resetTotal" class="button text-white rounded-md px-4 py-2 mt-4 mb-2">Absolut zurücksetzen</button>
         </div>
     </div>
 </template>
@@ -87,18 +99,15 @@
                 this.total = false;
                 this.percent = false;
 
-                this.diceResults = [{ ameise: 0, frosch: 0, schnecke: 0, igel: 0 }]
-                console.log("Easy");
+                this.diceResults = [{ ameise: 0, frosch: 0, schnecke: 0, igel: 0 }];
             } 
             if(newVal == Mode.TOTAL) {
                 this.total = true;
                 this.easy = false;
                 this.percent = false;
                 this.diceResults = [{ ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
-                                    { ameise: 0, frosch: 0, schnecke: 0, igel: 0 }]
-
-                console.log("Total");
-
+                                    { ameise: 0, frosch: 0, schnecke: 0, igel: 0 }];
+                this.numberOfRollsTotal = 0;
             } 
             if(newVal == Mode.PERCENT) {
                 this.percent = true;
@@ -106,9 +115,8 @@
                 this.total = false;
                 this.diceResults = [{ ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
                                     { ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
-                                    { ameise: 0, frosch: 0, schnecke: 0, igel: 0 }]
-
-                console.log("Percent");
+                                    { ameise: 0, frosch: 0, schnecke: 0, igel: 0 }];
+                this.numberOfRollsTotal = 0;
             } 
         }
     },
@@ -119,6 +127,7 @@
         total: false,
         percent: false,
         numberOfRolls: '',
+        numberOfRollsTotal: 0,
         totalSides: 20,
         rolls: [],
         warningRollsHigh: false,
@@ -139,6 +148,10 @@
     methods: {
         diceRolled() {
             const rolls = [];
+
+            if (this.numberOfRolls == 0) {
+                this.warningRollsLow = true;
+            }
 
             if (this.warningRollsLow || this.warningRollsHigh) {
                 this.rolls = rolls;
@@ -184,6 +197,8 @@
                 this.diceResults[2].igel = (((rolls.filter(roll => roll === 'blue').length) / this.numberOfRolls) * 100).toFixed() + "%";
             }
 
+            this.numberOfRollsTotal = this.numberOfRollsTotal + this.numberOfRolls;
+
             this.$emit('rollDice');
         },
         enforceMinMax() {
@@ -191,15 +206,22 @@
             if (this.numberOfRolls > 1000000) {
                 this.warningRollsHigh = true;
             } 
-            else if ((this.numberOfRolls < 1) && (this.numberOfRolls != '')) {
-                this.warningRollsLow = true;
-            }
-            else {
+            else if(this.numberOfRolls > 0) {
                 this.warningRollsHigh = false;
                 this.warningRollsLow = false;
             }
         },
+        resetTotal() {
+            this.diceResults[1].ameise =  0;
+            this.diceResults[1].frosch = 0;
+            this.diceResults[1].schnecke = 0;
+            this.diceResults[1].igel = 0;
 
+            this.numberOfRollsTotal = 0;
+        },
+        removeLeadingZeros(event) {
+            event.target.value = event.target.value.replace(/^0+/, '');
+        }
     }
 }
 </script>

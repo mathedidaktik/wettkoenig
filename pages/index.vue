@@ -38,6 +38,7 @@
 export default{
         data() {
             return {
+                hasMode:false,
                 modeData: Mode.NONE,
                 chartHorizontal: true,
                 chart: null,
@@ -114,12 +115,17 @@ export default{
         },
         methods: {
             easy() {
+                document.getElementById("x-top-level-container").style.visibility = "visible"; 
                 this.modeData = Mode.EASY;
             },
             total() {
+                document.getElementById("x-top-level-container").style.visibility = "visible"; 
+                this.hasMode = true;
                 this.modeData = Mode.TOTAL;
             },
             percent() {
+                document.getElementById("x-top-level-container").style.visibility = "visible"; 
+                this.hasMode = true;
                 this.modeData = Mode.PERCENT;
             },
             updateChart() {
@@ -179,7 +185,8 @@ export default{
             data: this.chartData,
             options: this.chartOptions
             });
-            
+
+            document.getElementById("x-top-level-container").style.visibility = "hidden"; 
         },
        
     }
