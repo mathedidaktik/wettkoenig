@@ -4,6 +4,10 @@
   
 .chart {
   flex-grow: 1;
+  max-height: 500px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
@@ -53,6 +57,8 @@
 
 .lableContainer {
   width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
@@ -93,18 +99,26 @@ html,body, #__nuxt, #__layout{
 }
 
 .dice-table {
-  width: 100%;
   table-layout: fixed; 
   border: 1px solid;
+  max-width: 700px;
+
 }
 
 .dice-table th, .dice-table td {
   width: 25%; 
 }
 
+.dice {
+  max-width: 500px;
+  min-width: 400px;
+}
+
 .table-container {
   display: flex;
   align-items: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .row-descriptions {
@@ -157,4 +171,9 @@ html,body, #__nuxt, #__layout{
   display: flex;
   justify-content: center;
   margin: auto;
+}
+
+.canvas-table-container {
+  margin-left: auto;
+  margin-right: auto;
 }
