@@ -27,9 +27,6 @@
                 <label class="text-lg font-medium blueInput w-full block">{{ 3 }} blaue Seiten</label>
             </div>
         </div>
-        <div class="flex flex-col space-y-8">
-            <button v-if="this.total||this.percent" type="button" @click="resetTotal" class="button text-white rounded-md px-4 py-2 mt-4 mb-2">Absolut zurücksetzen</button>
-        </div>
     </div>
 </template>
 

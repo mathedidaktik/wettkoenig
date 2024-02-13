@@ -26,7 +26,7 @@
                         <thead>
                             <tr>
                                 <th><img class="table-head-img" src="../assets/bilder/rot.png" width="100"></th>
-                                <th><img class="table-head-img" src="../assets/bilder/grün.png" width="100"></th>
+                                <th><img class="table-head-img" src="../assets/bilder/gruen.png" width="100"></th>
                                 <th><img class="table-head-img" src="../assets/bilder/gelb.png" width="100"></th>
                                 <th><img class="table-head-img" src="../assets/bilder/blau.png" width="100"></th>
                             </tr>
@@ -66,8 +66,37 @@
     import { Bundle } from 'magic-string';
     import lodash from "lodash";
     import { Mode } from '../assets/enum/mode.js';
+    import rotBild from '../assets/bilder/rot.png';
+    import gruenBild from '../assets/bilder/gruen.png';
+    import gelbBild from '../assets/bilder/gelb.png';
+    import blauBild from '../assets/bilder/blau.png';
 
   
+const imageOverBarPlugin = {
+    afterDraw: function(chart) {
+        var ctx = chart.ctx;
+        chart.data.datasets.forEach((dataset, i) => {
+          var meta = chart.getDatasetMeta(i);
+          if (!meta.hidden) {
+            meta.data.forEach((element, index) => {
+              if (dataset.data[index] > 0) {
+                let image = new Image();
+                image.onload = function() {
+                            let imageWidth = 100;
+                            let imageHeight = 100;
+                            
+                            let xPosition = element.x - imageWidth / 2;
+                            let yPosition = element.y - imageHeight - 10;
+
+                            ctx.drawImage(image, xPosition, yPosition, imageWidth, imageHeight);
+                        };
+                image.src = dataset.images[index];
+              }
+            });
+          }
+        });
+      }
+};
 export default{
         data() {
             return {
@@ -95,6 +124,7 @@ export default{
                         data: [0, 0, 0, 0],
                         rolls: [0, 0, 0, 0],
                         labels: ['Rot', 'Grün', 'Gelb', 'Blau'],
+                        images: [rotBild, gruenBild, gelbBild, blauBild],
                     },
                     ]     
                },
@@ -263,15 +293,15 @@ export default{
             this.diceResults[1].igel = 0;
 
             this.numberOfRollsTotal = 0;
+            },
         },
-        },
-
         mounted() {
             let ctx = this.$refs.myChart.getContext('2d');
             this.myChart = new Chart(ctx, {
             type: 'bar',
             data: this.chartData,
-            options: this.chartOptions
+            options: this.chartOptions,
+            plugins: [imageOverBarPlugin],
             });
 
             document.getElementById("x-top-level-container").style.visibility = "hidden"; 
