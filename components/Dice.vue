@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col space-y-8">
+    <div class="flex flex-col space-y-4">
 
         <div class="flex flex-col items-start">
             <label for="num-rolls" class="text-lg font-medium">Anzahl Würfe:</label>

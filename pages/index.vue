@@ -1,9 +1,9 @@
 <template>
     <div class="header-container flex w-full">
         <div class="buttons-container flex flex-row rounded-md px-4 p-4 m-0 mt-2 ml-4 mr-2">
-            <button class="button-top" @click="clickEasy">Einfach</button>
-            <button class="button-top" @click="clickTotal">Absolut</button>
-            <button class="button-top" @click="clickPercent">Prozent</button>
+            <button class="button-top" @click="clickEasy">Wettkönig</button>
+            <button class="button-top" @click="clickTotal">absolut</button>
+            <button class="button-top" @click="clickPercent">prozentual</button>
         </div>
     </div>
 
@@ -50,7 +50,7 @@
                 <label v-if="this.total||this.percent" class="rolls">Anzahl Würfe Insgesamt: {{ this.numberOfRollsTotal }}</label>
             </div>
             <div class="flex flex-col space-y-8">
-                <button v-if="this.total||this.percent" type="button" @click="resetTotal" class="button text-white rounded-md px-4 py-2 mt-4 mb-2">Absolut zurücksetzen</button>
+                <button v-if="this.total||this.percent" type="button" @click="resetTable" class="button text-white rounded-md px-4 py-2 mt-4 mb-2">Bei null beginnen</button>
             </div>
             <figure>
                 <canvas ref="myChart" class="w-full h-full mt-1 chart"></canvas>
@@ -193,6 +193,8 @@ export default{
                 this.total = false;
                 this.percent = false;
                 this.diceResults = [{ ameise: 0, frosch: 0, schnecke: 0, igel: 0 }];
+
+                this.setTableToZero();
             },
             clickTotal() {
                 document.getElementById("x-top-level-container").style.visibility = "visible"; 
@@ -204,6 +206,8 @@ export default{
                 this.diceResults = [{ ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
                                     { ameise: 0, frosch: 0, schnecke: 0, igel: 0 }];
                 this.numberOfRollsTotal = 0;
+
+                this.setTableToZero();
             },
             clickPercent() {
                 document.getElementById("x-top-level-container").style.visibility = "visible"; 
@@ -216,6 +220,8 @@ export default{
                                     { ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
                                     { ameise: 0, frosch: 0, schnecke: 0, igel: 0 }];
                 this.numberOfRollsTotal = 0;
+
+                this.setTableToZero();
             },
             updateChart() {
                 let dice = this.$refs.dice;
@@ -286,13 +292,27 @@ export default{
 
                 this.displayChart(dice.rolls, dice.numberOfRolls);
             },
-            resetTotal() {
-            this.diceResults[1].ameise =  0;
-            this.diceResults[1].frosch = 0;
-            this.diceResults[1].schnecke = 0;
-            this.diceResults[1].igel = 0;
+            resetTable() {
+                this.diceResults[0].ameise =  0;
+                this.diceResults[0].frosch = 0;
+                this.diceResults[0].schnecke = 0;
+                this.diceResults[0].igel = 0;
 
-            this.numberOfRollsTotal = 0;
+                this.diceResults[1].ameise =  0;
+                this.diceResults[1].frosch = 0;
+                this.diceResults[1].schnecke = 0;
+                this.diceResults[1].igel = 0;
+
+                if (this.percent) {
+                    this.diceResults[2].ameise =  0;
+                    this.diceResults[2].frosch = 0;
+                    this.diceResults[2].schnecke = 0;
+                    this.diceResults[2].igel = 0;
+                }
+
+                this.numberOfRollsTotal = 0;
+
+                this.setTableToZero();
             },
         },
         mounted() {

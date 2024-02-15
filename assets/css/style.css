@@ -74,7 +74,7 @@ html,body, #__nuxt, #__layout{
 }
 
 #x-top-level-container {
-  max-height: 90vh;
+  max-height: calc(100vh - 92px);
 }
 
 .ameise {
@@ -155,6 +155,7 @@ html,body, #__nuxt, #__layout{
 
 .header-container {
   position: relative;
+  height: 92px;
 }
 
 .rolls {
