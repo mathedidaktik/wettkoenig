@@ -12,6 +12,10 @@
             <button type="button" @click="diceRolled" class="button text-white rounded-md px-4 py-2 mt-4 mb-2">Würfeln</button>
         </div>
 
+        <div class="total-rolls-container" v-if="this.total||this.percent">
+            <lable>Anzahl Würfe Insgesamt: {{this.numberOfRollsTotal}}</lable>
+        </div>
+
         <div v-if="this.total||this.percent" ref="container" class="space-y-2 lableContainer">
             <label>Auf dem Würfel sind:</label>
             <div>
@@ -71,6 +75,7 @@
         total: false,
         percent: false,
         numberOfRolls: '',
+        numberOfRollsTotal: '',
         totalSides: 20,
         rolls: [],
         warningRollsHigh: false,
@@ -115,6 +120,8 @@
                 }
             }
             this.rolls = rolls
+
+            this.numberOfRollsTotal = this.numberOfRolls + this.numberOfRollsTotal;
            
             this.$emit('rollDice');
         },
@@ -130,6 +137,9 @@
         },
         removeLeadingZeros(event) {
             event.target.value = event.target.value.replace(/^0+/, '');
+        },
+        setTotalRollsZero() {
+            this.numberOfRollsTotal = 0;
         }
     }
 }

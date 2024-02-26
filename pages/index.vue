@@ -1,60 +1,64 @@
 <template>
-    <div class="header-container flex w-full">
-        <div class="buttons-container flex flex-row rounded-md px-4 p-4 m-0 mt-2 ml-4 mr-2">
-            <button class="button-top" :class="[backgroundColor, this.easy ? 'button-on' : '',]"  @click="clickEasy">Wettkönig</button>
-            <button class="button-top" :class="[backgroundColor, this.total ? 'button-on' : '',]" @click="clickTotal">absolut</button>
-            <button class="button-top" :class="[backgroundColor, this.percent ? 'button-on' : '',]" @click="clickPercent">prozentual</button>
-        </div>
-    </div>
 
     <div id="x-top-level-container" class="flex h-full w-full flex-wrap flex-row justify-between">
-        
-        <div id="y-dice-control-container" class="dice p-4 h-full">
-            <Dice :default="modeData" ref="dice" @rollDice="rollDice"></Dice>
+        <div>
+            <div class="header-container flex w-full">
+                <div class="buttons-container flex flex-row rounded-md px-4 p-4 m-0 mt-2 ml-4 mr-2">
+                    <button class="button-top" :class="[backgroundColor, this.easy ? 'button-on' : '',]"  @click="clickEasy">Wettkönig</button>
+                    <button class="button-top" :class="[backgroundColor, this.total ? 'button-on' : '',]" @click="clickTotal">absolut</button>
+                    <button class="button-top" :class="[backgroundColor, this.percent ? 'button-on' : '',]" @click="clickPercent">prozentual</button>
+                </div>
+            </div>
+            <div id="y-dice-control-container" class="dice p-4">
+                <Dice :default="modeData" ref="dice" @rollDice="rollDice"></Dice>
+            </div>
         </div>
+
         
         <div id="canvas-container" class="canvas-table-container">
             <div class="table-container">
-                <div class="row-descriptions">
-                    <div>Tiere</div>
-                    <div>Stand</div>
-                    <div v-if="this.total || this.percent">Absolut</div>
-                    <div v-if="this.percent">Prozent</div>
-                </div>
-                <div>
-                    <table class="dice-table">
-                        <thead>
-                            <tr>
-                                <th><img class="table-head-img" src="../assets/bilder/rot.png" width="100"></th>
-                                <th><img class="table-head-img" src="../assets/bilder/gruen.png" width="100"></th>
-                                <th><img class="table-head-img" src="../assets/bilder/gelb.png" width="100"></th>
-                                <th><img class="table-head-img" src="../assets/bilder/blau.png" width="100"></th>
-                            </tr>
-                            <tr>
-                                <th class="ameise">Ameise</th>
-                                <th class="frosch">Frosch</th>
-                                <th class="schnecke">Schnecke</th>
-                                <th class="igel">Igel</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(row, index) in diceResults" :key="index">
-                                <td class="ameise">{{ row.ameise }}</td>
-                                <td class="frosch">{{ row.frosch }}</td>
-                                <td class="schnecke">{{ row.schnecke }}</td>
-                                <td class="igel">{{ row.igel }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <label v-if="this.total||this.percent" class="rolls">Anzahl Würfe Insgesamt: {{ this.numberOfRollsTotal }}</label>
+
+                <table class="dice-table">
+                    <thead>
+                        <tr class="table-row-header">
+                            <th class="no-border th-fixed-w-99"></th>
+                            <th class="th-fixed-w"><img class="table-head-img" src="../assets/bilder/rot.png" width="80"></th>
+                            <th class="th-fixed-w"><img class="table-head-img" src="../assets/bilder/gruen.png" width="80"></th>
+                            <th class="th-fixed-w"><img class="table-head-img" src="../assets/bilder/gelb.png" width="80"></th>
+                            <th class="th-fixed-w"><img class="table-head-img" src="../assets/bilder/blau.png" width="80"></th>
+                        </tr>
+                        <tr class="table-rows">
+                            <th class="no-border">Tiere</th>
+                            <th class="ameise">Ameise</th>
+                            <th class="frosch">Frosch</th>
+                            <th class="schnecke">Schnecke</th>
+                            <th class="igel">Igel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(row, index) in diceResults" :key="index" class="table-rows">
+                            <td class="no-border">{{ row.text}}</td>
+                            <td class="ameise center">{{ row.ameise }}</td>
+                            <td class="frosch center">{{ row.frosch }}</td>
+                            <td class="schnecke center">{{ row.schnecke }}</td>
+                            <td class="igel center">{{ row.igel }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+    
             </div>
             <div class="flex flex-col space-y-8">
-                <button v-if="this.total||this.percent" type="button" @click="resetTable" class="button text-white rounded-md px-4 py-2 mt-4 mb-2">Bei null beginnen</button>
+                <button id="total-button" type="button" @click="resetTable" class="button text-white rounded-md px-4 py-2 mt-4 mb-2">Bei null beginnen</button>
             </div>
-            <figure>
+            <figure class="">
                 <canvas ref="myChart" class="w-full h-full mt-1 chart"></canvas>
             </figure>
+            <div class="img-container">
+                <img class="img-chart" src="../assets/bilder/rot.png" width="100">
+                <img class="img-chart" src="../assets/bilder/gruen.png" width="100">
+                <img class="img-chart" src="../assets/bilder/gelb.png" width="100">
+                <img class="img-chart" src="../assets/bilder/blau.png" width="100">
+            </div>
         </div>
     </div>
 </template>
@@ -71,32 +75,7 @@
     import gelbBild from '../assets/bilder/gelb.png';
     import blauBild from '../assets/bilder/blau.png';
 
-  
-const imageOverBarPlugin = {
-    afterDraw: function(chart) {
-        var ctx = chart.ctx;
-        chart.data.datasets.forEach((dataset, i) => {
-          var meta = chart.getDatasetMeta(i);
-          if (!meta.hidden) {
-            meta.data.forEach((element, index) => {
-              if (dataset.data[index] > 0) {
-                let image = new Image();
-                image.onload = function() {
-                            let imageWidth = 100;
-                            let imageHeight = 100;
-                            
-                            let xPosition = element.x - imageWidth / 2;
-                            let yPosition = element.y - imageHeight - 10;
 
-                            ctx.drawImage(image, xPosition, yPosition, imageWidth, imageHeight);
-                        };
-                image.src = dataset.images[index];
-              }
-            });
-          }
-        });
-      }
-};
 export default{
         data() {
             return {
@@ -109,12 +88,12 @@ export default{
                 chartHorizontal: true,
                 chart: null,
                 diceResults: [
-                    { ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
-                    { ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
-                    { ameise: 0, frosch: 0, schnecke: 0, igel: 0 }
+                    { text: 'Stand', ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
+                    { text: 'absolut', ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
+                    { text: 'prozentual', ameise: 0, frosch: 0, schnecke: 0, igel: 0 }
                 ],
                 chartData: {
-                    labels: ['Rot', 'Grün', 'Gelb', 'Blau'],
+                    labels: ['', '', '', ''],
                     datasets: [
                     {
                         label: 'Würfel',
@@ -123,7 +102,6 @@ export default{
                         borderWidth: 1,
                         data: [0, 0, 0, 0],
                         rolls: [0, 0, 0, 0],
-                        labels: ['Rot', 'Grün', 'Gelb', 'Blau'],
                         images: [rotBild, gruenBild, gelbBild, blauBild],
                     },
                     ]     
@@ -187,41 +165,50 @@ export default{
         },
         methods: {
             clickEasy() {
-                document.getElementById("x-top-level-container").style.visibility = "visible"; 
+                document.getElementById("y-dice-control-container").style.visibility = "visible";
+                document.getElementById("canvas-container").style.visibility = "visible";
+                document.getElementById("total-button").style.visibility = "hidden";
+
                 this.modeData = Mode.EASY;
                 this.easy = true;
                 this.total = false;
                 this.percent = false;
                 this.diceResults = [{ ameise: 0, frosch: 0, schnecke: 0, igel: 0 }];
 
-                this.setTableToZero();
+                this.resetTable();
             },
             clickTotal() {
-                document.getElementById("x-top-level-container").style.visibility = "visible"; 
+                document.getElementById("y-dice-control-container").style.visibility = "visible";
+                document.getElementById("canvas-container").style.visibility = "visible";
+                document.getElementById("total-button").style.visibility = "visible";
+
                 this.hasMode = true;
                 this.modeData = Mode.TOTAL;
                 this.easy = false;
                 this.total = true;
                 this.percent = false;
-                this.diceResults = [{ ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
-                                    { ameise: 0, frosch: 0, schnecke: 0, igel: 0 }];
+                this.diceResults = [{ text: 'Stand', ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
+                                    { text: 'absolut', ameise: 0, frosch: 0, schnecke: 0, igel: 0 }];
                 this.numberOfRollsTotal = 0;
 
-                this.setTableToZero();
+                this.resetTable();
             },
             clickPercent() {
-                document.getElementById("x-top-level-container").style.visibility = "visible"; 
+                document.getElementById("y-dice-control-container").style.visibility = "visible";
+                document.getElementById("canvas-container").style.visibility = "visible";
+                document.getElementById("total-button").style.visibility = "visible";
+
                 this.hasMode = true;
                 this.modeData = Mode.PERCENT;
                 this.easy = false;
                 this.total = false;
                 this.percent = true;
-                this.diceResults = [{ ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
-                                    { ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
-                                    { ameise: 0, frosch: 0, schnecke: 0, igel: 0 }];
+                this.diceResults = [{ text: 'Stand', ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
+                                    { text: 'absoulut', ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
+                                    { text: 'prozentual', ameise: 0, frosch: 0, schnecke: 0, igel: 0 }];
                 this.numberOfRollsTotal = 0;
 
-                this.setTableToZero();
+                this.resetTable();
             },
             updateChart() {
                 let dice = this.$refs.dice;
@@ -269,6 +256,9 @@ export default{
                     this.displayChart([], 0);
                     return;
                 }
+
+                this.numberOfRollsTotal = this.numberOfRollsTotal + dice.numberOfRolls;
+
                 this.diceResults[0].ameise = (dice.rolls.filter(roll => roll === 'red').length);
                 this.diceResults[0].frosch = (dice.rolls.filter(roll => roll === 'green').length);
                 this.diceResults[0].schnecke = (dice.rolls.filter(roll => roll === 'yellow').length);
@@ -282,13 +272,12 @@ export default{
                 }
 
                 if (this.percent) {
-                    this.diceResults[2].ameise =  (((dice.rolls.filter(roll => roll === 'red').length) / dice.numberOfRolls) * 100).toFixed() + "%";
-                    this.diceResults[2].frosch = (((dice.rolls.filter(roll => roll === 'green').length) / dice.numberOfRolls) * 100).toFixed() + "%";
-                    this.diceResults[2].schnecke = (((dice.rolls.filter(roll => roll === 'yellow').length) / dice.numberOfRolls) * 100).toFixed() + "%";
-                    this.diceResults[2].igel = (((dice.rolls.filter(roll => roll === 'blue').length) / dice.numberOfRolls) * 100).toFixed() + "%";
+                    this.diceResults[2].ameise =  ((this.diceResults[1].ameise / this.numberOfRollsTotal) * 100).toFixed() + "%";
+                    this.diceResults[2].frosch = ((this.diceResults[1].frosch / this.numberOfRollsTotal) * 100).toFixed() + "%";
+                    this.diceResults[2].schnecke = ((this.diceResults[1].schnecke/ this.numberOfRollsTotal) * 100).toFixed() + "%";
+                    this.diceResults[2].igel = ((this.diceResults[1].igel/ this.numberOfRollsTotal) * 100).toFixed() + "%";
                 }
 
-                this.numberOfRollsTotal = this.numberOfRollsTotal + dice.numberOfRolls;
 
                 this.displayChart(dice.rolls, dice.numberOfRolls);
             },
@@ -312,20 +301,23 @@ export default{
 
                 this.numberOfRollsTotal = 0;
 
+                this.$refs.dice.setTotalRollsZero();
+
                 this.setTableToZero();
             },
         },
         mounted() {
             let ctx = this.$refs.myChart.getContext('2d');
             this.myChart = new Chart(ctx, {
-            type: 'bar',
-            data: this.chartData,
-            options: this.chartOptions,
-            plugins: [imageOverBarPlugin],
+                type: 'bar',
+                data: this.chartData,
+                options: this.chartOptions,
             });
 
-            document.getElementById("x-top-level-container").style.visibility = "hidden"; 
-        },
+            document.getElementById("y-dice-control-container").style.visibility = "hidden";
+            document.getElementById("canvas-container").style.visibility = "hidden";
+        }
+
        
     }
 </script>

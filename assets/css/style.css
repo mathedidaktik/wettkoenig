@@ -3,11 +3,11 @@
 }
   
 .chart {
-  flex-grow: 1;
   max-height: 500px;
   max-width: 700px;
-  margin-left: auto;
+  margin-left: 52px;
   margin-right: auto;
+  margin-top: 0px;
 }
 
 
@@ -69,12 +69,11 @@ figure {
 }
 
 html,body, #__nuxt, #__layout{
-  height:100%!important;
   width: 100%!important;
 }
 
 #x-top-level-container {
-  max-height: calc(100vh - 92px);
+  max-height: 100vh;
 }
 
 .ameise {
@@ -100,13 +99,8 @@ html,body, #__nuxt, #__layout{
 
 .dice-table {
   table-layout: fixed; 
-  border: 1px solid;
   max-width: 700px;
 
-}
-
-.dice-table th, .dice-table td {
-  width: 25%; 
 }
 
 .dice {
@@ -119,6 +113,7 @@ html,body, #__nuxt, #__layout{
   align-items: center;
   margin-left: auto;
   margin-right: auto;
+  height: 200px;
 }
 
 .row-descriptions {
@@ -127,11 +122,15 @@ html,body, #__nuxt, #__layout{
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  min-width: 77px;
+  max-width: 77px;
 }
 
 .button {
   background-color: #17365c;
   color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .button-top {
@@ -166,19 +165,66 @@ html,body, #__nuxt, #__layout{
 
 .dice-table {
   width: 100%;
+  max-width: 658px;
+  min-width: 658px;
+  margin-top: 10px;
+  margin-bottom: auto;
 }
 
 .table-head-img {
   display: flex;
   justify-content: center;
   margin: auto;
+  height: 80px;
 }
 
 .canvas-table-container {
   margin-left: auto;
   margin-right: auto;
+  height: 100vh;
 }
 
 .button-on {
   background-color: #275a99;
+}
+
+.center {
+  text-align: center;
+}
+
+.img-container {
+  display: flex;
+  margin-left: 70px;
+  margin-bottom:10px
+}
+
+.img-chart {
+  margin-left: 56px;
+}
+
+.total-rolls-container {
+  border-radius: 20px;
+  text-align: center;
+  border: 3px solid  #17365c;
+
+}
+
+.no-border {
+  border: "0";
+}
+
+.th-fixed-w-99 {
+  width: 99px;
+}
+
+.th-fixed-w {
+  width: 156px;
+}
+
+.table-rows {
+  height: 28px;
+}
+
+.table-row-header {
+  height: 80px;
 }
