@@ -103,6 +103,8 @@ export default{
                         data: [0, 0, 0, 0],
                         rolls: [0, 0, 0, 0],
                         images: [rotBild, gruenBild, gelbBild, blauBild],
+                        categoryPercentage: 1.0,
+                        barPercentage: 1.0
                     },
                     ]     
                },
@@ -248,9 +250,11 @@ export default{
             },
             displayChart(rolls, numberOfRolls) {
 
-                this.myChart.options.animation.duration = 0;
-                this.setTableToZero();
-                this.myChart.options.animation.duration = 1500
+                if(this.easy) {
+                    this.myChart.options.animation.duration = 0;
+                    this.setTableToZero();
+                    this.myChart.options.animation.duration = 1500;
+                }
 
                 var allData = [
                 {rank: 1, label: 'Rot', value: ((rolls.filter(roll => roll === 'red').length) / numberOfRolls) * 100, rolls: (rolls.filter(roll => roll === 'red').length), sides: 7},
