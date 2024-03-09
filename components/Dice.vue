@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col space-y-4">
+    <div class="flex flex-col">
 
         <div class="flex flex-col items-start">
             <label for="num-rolls" class="text-lg font-medium">Anzahl Würfe:</label>
@@ -8,15 +8,15 @@
             <label v-if="warningRollsHigh" class="text-red-700">Du darfst maximal 1.000.000 eingeben.</label>
         </div>
 
-        <div class="flex flex-col space-y-8">
+        <div class="flex flex-col">
             <button type="button" @click="diceRolled" class="button text-white rounded-md px-4 py-2 mt-4 mb-2">Würfeln</button>
         </div>
 
-        <div class="total-rolls-container" v-if="this.total||this.percent">
+        <div class="total-rolls-container marg-top" v-if="this.total||this.percent">
             <lable>Anzahl Würfe Insgesamt: {{this.numberOfRollsTotal}}</lable>
         </div>
 
-        <div v-if="this.total||this.percent" ref="container" class="space-y-2 lableContainer">
+        <div v-if="this.total||this.percent" ref="container" class="space-y-2 lableContainer marg-top">
             <label>Auf dem Würfel sind:</label>
             <div>
                 <label class="text-lg font-medium redInput w-full block">{{ 7 }} rote Seiten</label>

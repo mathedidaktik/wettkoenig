@@ -9,7 +9,7 @@
                     <button class="button-top" :class="[backgroundColor, this.percent ? 'button-on' : '',]" @click="clickPercent">prozentual</button>
                 </div>
             </div>
-            <div id="y-dice-control-container" class="dice p-4">
+            <div id="y-dice-control-container" class="dice marg">
                 <Dice :default="modeData" ref="dice" @rollDice="rollDice"></Dice>
             </div>
         </div>
@@ -101,6 +101,7 @@ export default{
                         borderColor: ['rgb(0, 0, 0)', 'rgb(0, 0, 0)', 'rgb(0,0,0)', 'rgb(0, 0, 0)'],
                         borderWidth: 1,
                         data: [0, 0, 0, 0],
+                        percent: [0, 0, 0, 0],
                         rolls: [0, 0, 0, 0],
                         images: [rotBild, gruenBild, gelbBild, blauBild],
                         categoryPercentage: 1.0,
@@ -125,7 +126,7 @@ export default{
                                     context.dataset.rolls[context.dataIndex] +
                                     '-mal geworfen' +
                                     ' (' +
-                                    Math.round(context.dataset.data[context.dataIndex]) +
+                                    Math.round(context.dataset.percent[context.dataIndex]) +
                                     '%)'
                                 );
                                 },
@@ -177,7 +178,6 @@ export default{
 
                 this.resetTable();
                 this.displayChart([], 0);
-
             },
             clickTotal() {
                 document.getElementById("y-dice-control-container").style.visibility = "visible";
@@ -202,8 +202,6 @@ export default{
 
                 this.resetTable();
                 this.displayChart([], 0);
-
-
             },
             clickPercent() {
                 document.getElementById("y-dice-control-container").style.visibility = "visible";
@@ -229,8 +227,6 @@ export default{
                   
                 this.resetTable();
                 this.displayChart([], 0);
-
-
             },
             updateChart() {
                 let dice = this.$refs.dice;
@@ -273,14 +269,14 @@ export default{
 
                 this.myChart.data.datasets[0].rolls = newRolls;
                 this.myChart.data.datasets[0].data = newData;
+                this.myChart.data.datasets[0].percent = allData.map(data => data.value);
 
                 if (!this.percent) {
                     this.myChart.options.scales.y.max = numberOfRolls;
                     this.myChart.options.scales.y.min = 0;
                 }
 
-                this.updateChart();  
-                    
+                this.updateChart();                      
             },
             rollDice() {
                 let dice = this.$refs.dice;

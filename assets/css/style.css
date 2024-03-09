@@ -154,7 +154,7 @@ html,body, #__nuxt, #__layout{
 
 .header-container {
   position: relative;
-  height: 92px;
+  height: 100px;
 }
 
 .rolls {
@@ -185,7 +185,7 @@ html,body, #__nuxt, #__layout{
 }
 
 .button-on {
-  background-color: #275a99;
+  background-color: #8dae10;
 }
 
 .center {
@@ -231,4 +231,16 @@ html,body, #__nuxt, #__layout{
 
 .align-left {
   text-align: left;
+}
+
+.items-start {
+  height: 90px;
+}
+
+.marg {
+  margin: 10px
+}
+
+.marg-top {
+  margin-top: 20px;
 }
