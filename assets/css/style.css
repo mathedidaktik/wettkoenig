@@ -228,3 +228,7 @@ html,body, #__nuxt, #__layout{
 .table-row-header {
   height: 80px;
 }
+
+.align-left {
+  text-align: left;
+}

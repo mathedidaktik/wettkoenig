@@ -28,7 +28,7 @@
                             <th class="th-fixed-w"><img class="table-head-img" src="../assets/bilder/blau.png" width="80"></th>
                         </tr>
                         <tr class="table-rows">
-                            <th class="no-border">Tiere</th>
+                            <th class="no-border align-left">Tiere</th>
                             <th class="ameise">Ameise</th>
                             <th class="frosch">Frosch</th>
                             <th class="schnecke">Schnecke</th>
@@ -132,15 +132,6 @@ export default{
                         legend: {
                             display:false
                         },
-                        title: {
-                            display: true,
-                            color: "black",
-                            font: {
-                                family: "'Arial', 'Helvetica', 'sans-serif'",
-                                size: 18,
-                            },
-
-                        },
                     },
                     scales: {
                         x: {
@@ -173,9 +164,18 @@ export default{
                 this.easy = true;
                 this.total = false;
                 this.percent = false;
-                this.diceResults = [{ ameise: 0, frosch: 0, schnecke: 0, igel: 0 }];
+                this.diceResults = [{ text: 'Stand', ameise: 0, frosch: 0, schnecke: 0, igel: 0 }];
+                
+                this.myChart.options.scales.y.max = 100;
+                this.myChart.options.scales.y.min = 0;
+
+                this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
+                            return "      " + value;
+                            };            
 
                 this.resetTable();
+                this.displayChart([], 0);
+
             },
             clickTotal() {
                 document.getElementById("y-dice-control-container").style.visibility = "visible";
@@ -191,7 +191,17 @@ export default{
                                     { text: 'absolut', ameise: 0, frosch: 0, schnecke: 0, igel: 0 }];
                 this.numberOfRollsTotal = 0;
 
+                this.myChart.options.scales.y.max = 100;
+                this.myChart.options.scales.y.min = 0;
+
+                this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
+                                    return "      " + value;
+                                };
+
                 this.resetTable();
+                this.displayChart([], 0);
+
+
             },
             clickPercent() {
                 document.getElementById("y-dice-control-container").style.visibility = "visible";
@@ -208,7 +218,17 @@ export default{
                                     { text: 'prozentual', ameise: 0, frosch: 0, schnecke: 0, igel: 0 }];
                 this.numberOfRollsTotal = 0;
 
+                this.myChart.options.scales.y.max = 100;
+                this.myChart.options.scales.y.min = 0;
+
+                this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
+                                    return value + '%';
+                                };
+                  
                 this.resetTable();
+                this.displayChart([], 0);
+
+
             },
             updateChart() {
                 let dice = this.$refs.dice;
@@ -238,12 +258,22 @@ export default{
                 {rank: 3, label: 'Gelb', value: ((rolls.filter(roll => roll === 'yellow').length) / numberOfRolls) * 100, rolls: (rolls.filter(roll => roll === 'yellow').length), sides: 5},
                 {rank: 4, label: 'Blau', value: ((rolls.filter(roll => roll === 'blue').length) / numberOfRolls) * 100, rolls: (rolls.filter(roll => roll === 'blue').length), sides: 3},
                 ]
+            
+                if (this.percent){
+                    var newData = allData.map(data => data.value);
+                } else {
+                    var newData = allData.map(data => data.rolls);
+                }
 
-                var newData = allData.map(data => data.value);
                 var newRolls = allData.map(data => data.rolls);
 
                 this.myChart.data.datasets[0].rolls = newRolls;
                 this.myChart.data.datasets[0].data = newData;
+
+                if (!this.percent) {
+                    this.myChart.options.scales.y.max = numberOfRolls;
+                    this.myChart.options.scales.y.min = 0;
+                }
 
                 this.updateChart();  
                     
@@ -272,10 +302,10 @@ export default{
                 }
 
                 if (this.percent) {
-                    this.diceResults[2].ameise =  ((this.diceResults[1].ameise / this.numberOfRollsTotal) * 100).toFixed() + "%";
-                    this.diceResults[2].frosch = ((this.diceResults[1].frosch / this.numberOfRollsTotal) * 100).toFixed() + "%";
-                    this.diceResults[2].schnecke = ((this.diceResults[1].schnecke/ this.numberOfRollsTotal) * 100).toFixed() + "%";
-                    this.diceResults[2].igel = ((this.diceResults[1].igel/ this.numberOfRollsTotal) * 100).toFixed() + "%";
+                    this.diceResults[2].ameise =  ((this.diceResults[1].ameise / this.numberOfRollsTotal) * 100).toFixed(2) + "%";
+                    this.diceResults[2].frosch = ((this.diceResults[1].frosch / this.numberOfRollsTotal) * 100).toFixed(2) + "%";
+                    this.diceResults[2].schnecke = ((this.diceResults[1].schnecke/ this.numberOfRollsTotal) * 100).toFixed(2) + "%";
+                    this.diceResults[2].igel = ((this.diceResults[1].igel/ this.numberOfRollsTotal) * 100).toFixed(2) + "%";
                 }
 
 
@@ -302,8 +332,8 @@ export default{
                 this.numberOfRollsTotal = 0;
 
                 this.$refs.dice.setTotalRollsZero();
-
                 this.setTableToZero();
+
             },
         },
         mounted() {
