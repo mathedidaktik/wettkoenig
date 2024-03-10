@@ -143,7 +143,6 @@ export default{
                             max: 100,
                             min: 0,
                             ticks: {
-                                stepSize: 10,
                                 callback: function(value, index, ticks) {
                                     return value + '%';
                                 }
@@ -172,8 +171,8 @@ export default{
                 this.myChart.options.scales.y.min = 0;
 
                 this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
-                            return "      " + value;
-                            };            
+                    return "      " + value;
+                };            
 
                 this.resetTable();
             },
@@ -194,8 +193,9 @@ export default{
                 this.myChart.options.scales.y.min = 0;
 
                 this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
-                                    return "      " + value;
-                                };
+                    return "      " + value;
+                };
+
 
                 this.resetTable();
             },
@@ -217,8 +217,8 @@ export default{
                 this.myChart.options.scales.y.min = 0;
 
                 this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
-                                    return value + '%';
-                                };
+                    return value + '%';
+                };
                   
                 this.resetTable();
             },
@@ -268,11 +268,12 @@ export default{
                 if (!this.percent) {
                     this.myChart.options.scales.y.max = numberOfRolls;
                     this.myChart.options.scales.y.min = 0;
-                    this.myChart.options.scales.y.stepSize = this.getStepCount(numberOfRolls);
                 }
 
-
-                this.updateChart();                      
+                //this.fixLables();
+                //this.updateChart();        
+                this.myChart.update();
+              
             },
             rollDice() {
                 let dice = this.$refs.dice;
@@ -313,7 +314,7 @@ export default{
                 this.diceResults[0].schnecke = 0;
                 this.diceResults[0].igel = 0;
 
-                if (this.absolut || this.percent) {
+                if (this.total || this.percent) {
                     this.diceResults[1].ameise =  0;
                     this.diceResults[1].frosch = 0;
                     this.diceResults[1].schnecke = 0;
@@ -333,25 +334,37 @@ export default{
                 this.setTableToZero();
 
             },
-            getStepCount(number){
+            fixLables(number){
                 switch(number) {
-                    case number < 20:
-                        return 1;
-                        break;
-                    case number < 50:
-                        return 5;
+                    case number < 10:
+                        this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
+                            return  value;
+                            };
                         break;
                     case number < 100:
-                        return 10;
-                        break;
-                    case number < 200:
-                        return 20;
-                        break;
-                    case number < 500:
-                        return 50;
+                        this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
+                            return  value;
+                            };
                         break;
                     case number < 1000:
-                        return 100;
+                        this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
+                            return value;
+                            };
+                        break;
+                    case number < 10000:
+                        this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
+                            return value;
+                            };
+                        break;
+                    case number < 100000:
+                        this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
+                            return value;
+                            };
+                        break;
+                    case number < 1000000:
+                        this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
+                            return " " + value;
+                            };
                         break;
                 }
 
