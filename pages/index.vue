@@ -4,7 +4,7 @@
         <div>
             <div class="header-container flex w-full">
                 <div class="buttons-container flex flex-row rounded-md px-4 p-4 m-0 mt-2 ml-4 mr-2">
-                    <button class="button-top" :class="[backgroundColor, this.easy ? 'button-on' : '',]"  @click="clickEasy">Wettkönig</button>
+                    <button class="button-top" :class="[backgroundColor, this.easy ? 'button-on' : '',]" @click="clickEasy">Wettkönig</button>
                     <button class="button-top" :class="[backgroundColor, this.total ? 'button-on' : '',]" @click="clickTotal">absolut</button>
                     <button class="button-top" :class="[backgroundColor, this.percent ? 'button-on' : '',]" @click="clickPercent">prozentual</button>
                 </div>
@@ -82,7 +82,6 @@ export default{
                 easy: false,
                 total: false,
                 percent: false,
-                hasMode:false,
                 modeData: Mode.NONE,
                 numberOfRollsTotal: 0,
                 chartHorizontal: true,
@@ -177,14 +176,12 @@ export default{
                             };            
 
                 this.resetTable();
-                this.displayChart([], 0);
             },
             clickTotal() {
                 document.getElementById("y-dice-control-container").style.visibility = "visible";
                 document.getElementById("canvas-container").style.visibility = "visible";
                 document.getElementById("total-button").style.visibility = "visible";
 
-                this.hasMode = true;
                 this.modeData = Mode.TOTAL;
                 this.easy = false;
                 this.total = true;
@@ -201,14 +198,12 @@ export default{
                                 };
 
                 this.resetTable();
-                this.displayChart([], 0);
             },
             clickPercent() {
                 document.getElementById("y-dice-control-container").style.visibility = "visible";
                 document.getElementById("canvas-container").style.visibility = "visible";
                 document.getElementById("total-button").style.visibility = "visible";
 
-                this.hasMode = true;
                 this.modeData = Mode.PERCENT;
                 this.easy = false;
                 this.total = false;
@@ -226,7 +221,6 @@ export default{
                                 };
                   
                 this.resetTable();
-                this.displayChart([], 0);
             },
             updateChart() {
                 let dice = this.$refs.dice;
@@ -274,7 +268,9 @@ export default{
                 if (!this.percent) {
                     this.myChart.options.scales.y.max = numberOfRolls;
                     this.myChart.options.scales.y.min = 0;
+                    this.myChart.options.scales.y.stepSize = this.getStepCount(numberOfRolls);
                 }
+
 
                 this.updateChart();                      
             },
@@ -317,10 +313,12 @@ export default{
                 this.diceResults[0].schnecke = 0;
                 this.diceResults[0].igel = 0;
 
-                this.diceResults[1].ameise =  0;
-                this.diceResults[1].frosch = 0;
-                this.diceResults[1].schnecke = 0;
-                this.diceResults[1].igel = 0;
+                if (this.absolut || this.percent) {
+                    this.diceResults[1].ameise =  0;
+                    this.diceResults[1].frosch = 0;
+                    this.diceResults[1].schnecke = 0;
+                    this.diceResults[1].igel = 0;
+                }
 
                 if (this.percent) {
                     this.diceResults[2].ameise =  0;
@@ -335,6 +333,29 @@ export default{
                 this.setTableToZero();
 
             },
+            getStepCount(number){
+                switch(number) {
+                    case number < 20:
+                        return 1;
+                        break;
+                    case number < 50:
+                        return 5;
+                        break;
+                    case number < 100:
+                        return 10;
+                        break;
+                    case number < 200:
+                        return 20;
+                        break;
+                    case number < 500:
+                        return 50;
+                        break;
+                    case number < 1000:
+                        return 100;
+                        break;
+                }
+
+            }
         },
         mounted() {
             let ctx = this.$refs.myChart.getContext('2d');
