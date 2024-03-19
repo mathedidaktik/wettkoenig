@@ -2,7 +2,7 @@
     <div class="flex flex-col">
 
         <div class="flex flex-col items-start">
-            <label for="num-rolls" class="text-lg font-medium">Anzahl Würfe:</label>
+            <label for="num-rolls" class="text-lg font-medium">Anzahl der Würfe:</label>
             <input v-on:keyup.enter="diceRolled" type="number" id="num-rolls" class="border-gray-300 border rounded-md px-3 py-2 w-full" min="1" max="1000000" v-bind:keyup=enforceMinMax() v-model="numberOfRolls" @input="removeLeadingZeros">
             <label v-if="warningRollsLow" class="text-red-700">Du musst mindestens 1 eingeben.</label>
             <label v-if="warningRollsHigh" class="text-red-700">Du darfst maximal 1.000.000 eingeben.</label>
@@ -13,7 +13,7 @@
         </div>
 
         <div class="total-rolls-container marg-top" v-if="this.total||this.percent">
-            <lable>Anzahl Würfe Insgesamt: {{this.numberOfRollsTotal}}</lable>
+            <lable>Anzahl der Würfe Insgesamt: {{this.numberOfRollsTotal}}</lable>
         </div>
 
         <div v-if="this.total||this.percent" ref="container" class="space-y-2 lableContainer marg-top">
