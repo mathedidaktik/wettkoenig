@@ -86,7 +86,7 @@ export default{
                 numberOfRollsTotal: 0,
                 chartHorizontal: true,
                 chart: null,
-                marginLeft: '20px',
+                marginLeft: '52px',
                 diceDataTotal: [0, 0, 0, 0],
                 diceResults: [
                     { text: 'Stand', ameise: 0, frosch: 0, schnecke: 0, igel: 0 },
@@ -173,9 +173,12 @@ export default{
                 this.myChart.options.scales.y.max = 100;
                 this.myChart.options.scales.y.min = 0;
 
+                this.myChart.options.scales.y.ticks.stepSize = undefined;
                 this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
-                    return "      " + value;
+                    return value + "    ";
                 };            
+
+                //this.marginLeft = "52px";
 
                 this.myChart.options.animation.duration = 0;
                 this.resetTable();
@@ -199,10 +202,12 @@ export default{
                 this.myChart.options.scales.y.max = 100;
                 this.myChart.options.scales.y.min = 0;
 
+                this.myChart.options.scales.y.ticks.stepSize = undefined;
                 this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
-                    return "      " + value;
+                    return value + "    ";
                 };
 
+                //this.marginLeft = "52px";
 
                 this.myChart.options.animation.duration = 0;
                 this.resetTable();
@@ -227,11 +232,12 @@ export default{
                 this.myChart.options.scales.y.max = 100;
                 this.myChart.options.scales.y.min = 0;
 
+                this.myChart.options.scales.y.ticks.stepSize = undefined;
                 this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
                     return value + '%';
                 };
                 
-                this.marginLeft = "52px";
+                //this.marginLeft = "52px";
                 this.myChart.options.animation.duration = 0;
                 this.resetTable();
                 this.myChart.options.animation.duration = 1500;
@@ -293,7 +299,20 @@ export default{
                     this.myChart.options.scales.y.min = 0;
                 }
 
-                this.fixLables(this.numberOfRolls);
+                if (this.easy) {
+                    //this.fixMargin(this.numberOfRolls);
+                    this.fixLables(numberOfRolls);
+
+                }
+                if (this.total) {
+                    //this.fixMargin(this.numberOfRollsTotal);
+                    this.fixLables(this.numberOfRollsTotal);
+
+                }
+                if (this.percent) {
+                    //this.marginLeft = "52px";
+                }
+                
                 this.myChart.update();
               
             },
@@ -358,16 +377,26 @@ export default{
 
             },
             fixLables(number){
-                if (number < 7){
+                if (number < 6){
                     this.myChart.options.scales.y.ticks.stepSize = 1;
-                    this.myChart.options.scales.y.ticks.callback = function(value, index, values) {
-                    return Math.round(value);
-                    }
                 }
                 else {
                     this.myChart.options.scales.y.ticks.stepSize = undefined;
                 }
-                this.myChart.update();
+            },
+            fixMargin(number){
+                console.log("margin start");
+
+                if (number < 100) {
+                    this.marginLeft = "50px";
+                    console.log(this.marginLeft + "1");
+                } else if (number < 10000) {
+                    this.marginLeft = "35px";
+                    console.log(this.marginLeft + "2");
+                } else if (number < 10000000) {
+                    this.marginLeft = "30px";
+                    console.log(this.marginLeft + "3");
+                }
             }
         },
         mounted() {
