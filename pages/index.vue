@@ -176,7 +176,7 @@ export default{
                 this.myChart.options.scales.y.ticks.stepSize = undefined;
                 this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
                     return value + "    ";
-                };            
+                };         
 
                 //this.marginLeft = "52px";
 
@@ -302,15 +302,20 @@ export default{
                 if (this.easy) {
                     //this.fixMargin(this.numberOfRolls);
                     this.fixLables(numberOfRolls);
+                    this.fixCallback(numberOfRolls);
 
                 }
                 if (this.total) {
                     //this.fixMargin(this.numberOfRollsTotal);
                     this.fixLables(this.numberOfRollsTotal);
+                    this.fixCallback(this.numberOfRollsTotal);
 
                 }
                 if (this.percent) {
                     //this.marginLeft = "52px";
+                    this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
+                    return value + "%";
+                    }  
                 }
                 
                 this.myChart.update();
@@ -396,6 +401,33 @@ export default{
                 } else if (number < 10000000) {
                     this.marginLeft = "30px";
                     console.log(this.marginLeft + "3");
+                }
+            },
+            fixCallback(number) {
+                if (number < 100) {
+                    this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
+                    return value + "     ";
+                    }                
+                } else if (number < 1000) {
+                    this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
+                    return value + "    ";
+                    }  
+                } else if (number < 10000) {
+                    this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
+                    return value + "   ";
+                    }  
+                } else if (number < 100000) {
+                    this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
+                    return value + "  ";
+                    }  
+                } else if (number < 1000000) {
+                    this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
+                    return value + " ";
+                    }  
+                } else if (number < 10000000) {
+                    this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
+                    return value;
+                    }  
                 }
             }
         },
