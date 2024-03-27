@@ -118,18 +118,9 @@ export default{
                         tooltip: {
                             callbacks: {
                                 title: function (tooltipItems) {
-                                    return "Würfel";
+                                    return "Würfe";
                                 },
-                                label: function (context) {                              
-                                return (
-                                    context.label +
-                                    ': ' +
-                                    context.dataset.rolls[context.dataIndex] +
-                                    '-mal geworfen' +
-                                    ' (' +
-                                    Math.round(context.dataset.percent[context.dataIndex]) +
-                                    '%)'
-                                );
+                                label: function (context) {  
                                 },
                             },
                             },
@@ -178,8 +169,6 @@ export default{
                     return value + "    ";
                 };         
 
-                //this.marginLeft = "52px";
-
                 this.myChart.options.animation.duration = 0;
                 this.resetTable();
                 this.myChart.options.animation.duration = 1500;
@@ -206,8 +195,6 @@ export default{
                 this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
                     return value + "    ";
                 };
-
-                //this.marginLeft = "52px";
 
                 this.myChart.options.animation.duration = 0;
                 this.resetTable();
@@ -237,7 +224,6 @@ export default{
                     return value + '%';
                 };
                 
-                //this.marginLeft = "52px";
                 this.myChart.options.animation.duration = 0;
                 this.resetTable();
                 this.myChart.options.animation.duration = 1500;
@@ -290,32 +276,20 @@ export default{
                 this.myChart.data.datasets[0].percent = allData.map(data => data.value);
 
                 if (this.easy) {
-                    this.myChart.options.scales.y.max = numberOfRolls;
-                    this.myChart.options.scales.y.min = 0;
-                }
-
-                if (this.total) {
-                    this.myChart.options.scales.y.max = this.numberOfRollsTotal;
-                    this.myChart.options.scales.y.min = 0;
-                }
-
-                if (this.easy) {
-                    //this.fixMargin(this.numberOfRolls);
                     this.fixLables(numberOfRolls);
                     this.fixCallback(numberOfRolls);
 
                 }
                 if (this.total) {
-                    //this.fixMargin(this.numberOfRollsTotal);
                     this.fixLables(this.numberOfRollsTotal);
                     this.fixCallback(this.numberOfRollsTotal);
 
                 }
                 if (this.percent) {
-                    //this.marginLeft = "52px";
                     this.myChart.options.scales.y.ticks.callback = function(value, index, ticks) {
                     return value + "%";
                     }  
+                    this.myChart.options.scales.y.ticks.stepSize = undefined;
                 }
                 
                 this.myChart.update();
@@ -330,6 +304,7 @@ export default{
                     return;
                 }
 
+            
                 this.numberOfRollsTotal = this.numberOfRollsTotal + dice.numberOfRolls;
 
                 this.diceResults[0].ameise = (dice.rolls.filter(roll => roll === 'red').length);
@@ -384,7 +359,219 @@ export default{
             fixLables(number){
                 if (number < 6){
                     this.myChart.options.scales.y.ticks.stepSize = 1;
+                    this.myChart.options.scales.y.max = 5;
                 }
+                else if (number < 11){
+                    this.myChart.options.scales.y.ticks.stepSize = 2;
+                    this.myChart.options.scales.y.max = 10;
+                }
+                else if (number < 50){
+                    this.myChart.options.scales.y.ticks.stepSize = 5;
+                    if ((Math.floor(number / 10) * 10) == number){
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 10) * 10);
+
+                    }
+                    else {
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 10) * 10) + 10;
+
+                    }
+                }
+                else if (number == 50){
+                    this.myChart.options.scales.y.ticks.stepSize = 5;
+                    this.myChart.options.scales.y.max = 50;
+                }
+                else if (number < 100){
+                    this.myChart.options.scales.y.ticks.stepSize = 10;
+                    if ((Math.floor(number / 10) * 10) == number){
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 10) * 10);
+
+                    }
+                    else {
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 10) * 10) + 10;
+
+                    }
+                }
+                else if (number == 100){
+                    this.myChart.options.scales.y.ticks.stepSize = 10;
+                    this.myChart.options.scales.y.max = 100;
+                }
+                else if (number < 200){
+                    this.myChart.options.scales.y.ticks.stepSize = 20;
+                    if ((Math.floor(number / 20) * 20) == number){
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 20) * 20);
+
+                    }
+                    else {
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 20) * 20) + 20;
+
+                    }
+                }
+                else if (number == 200){
+                    this.myChart.options.scales.y.ticks.stepSize = 20;
+                    this.myChart.options.scales.y.max = 200;
+                }
+                else if (number < 500){
+                    this.myChart.options.scales.y.ticks.stepSize = 50;
+                    if ((Math.floor(number / 50) * 50) == number){
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 50) * 50);
+
+                    }
+                    else {
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 50) * 50) + 50;
+
+                    }
+                }
+                else if (number == 500){
+                    this.myChart.options.scales.y.ticks.stepSize = 50;
+                    this.myChart.options.scales.y.max = 500;
+                }
+                else if (number < 1000){
+                    this.myChart.options.scales.y.ticks.stepSize = 100;
+                    if ((Math.floor(number / 100) * 100) == number){
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 100) * 100);
+
+                    }
+                    else {
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 100) * 100) + 100;
+
+                    }
+                }
+                else if (number == 1000){
+                    this.myChart.options.scales.y.ticks.stepSize = 100;
+                    this.myChart.options.scales.y.max = 1000;
+                }
+                else if (number < 2000){
+                    this.myChart.options.scales.y.ticks.stepSize = 200;
+                    if ((Math.floor(number / 200) * 200) == number){
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 200) * 200);
+
+                    }
+                    else {
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 200) * 200) + 200;
+
+                    }
+                }
+                else if (number == 2000){
+                    this.myChart.options.scales.y.ticks.stepSize = 200;
+                    this.myChart.options.scales.y.max = 2000;
+                }
+                else if (number < 5000){
+                    this.myChart.options.scales.y.ticks.stepSize = 500;
+                    if ((Math.floor(number / 500) * 500) == number){
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 500) * 500);
+
+                    }
+                    else {
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 500) * 500) + 500;
+
+                    }
+                }
+                else if (number == 5000){
+                    this.myChart.options.scales.y.ticks.stepSize = 500;
+                    this.myChart.options.scales.y.max = 5000;
+                }
+                else if (number < 10000){
+                    this.myChart.options.scales.y.ticks.stepSize = 1000;
+                    if ((Math.floor(number / 1000) * 1000) == number){
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 1000) * 1000);
+
+                    }
+                    else {
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 1000) * 1000) + 1000;
+
+                    }
+                }
+                else if (number == 10000){
+                    this.myChart.options.scales.y.ticks.stepSize = 1000;
+                    this.myChart.options.scales.y.max = 10000;
+                }
+                else if (number < 20000){
+                    this.myChart.options.scales.y.ticks.stepSize = 2000;
+                    if ((Math.floor(number / 2000) * 2000) == number){
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 2000) * 2000);
+
+                    }
+                    else {
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 2000) * 2000) + 2000;
+
+                    }
+                }
+                else if (number == 20000){
+                    this.myChart.options.scales.y.ticks.stepSize = 2000;
+                    this.myChart.options.scales.y.max = 20000;
+                }
+                else if (number < 50000){
+                    this.myChart.options.scales.y.ticks.stepSize = 5000;
+                    if ((Math.floor(number / 5000) * 5000) == number){
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 5000) * 5000);
+
+                    }
+                    else {
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 5000) * 5000) + 5000;
+
+                    }
+                }
+                else if (number == 50000){
+                    this.myChart.options.scales.y.ticks.stepSize = 5000;
+                    this.myChart.options.scales.y.max = 50000;
+                }
+                else if (number < 100000){
+                    this.myChart.options.scales.y.ticks.stepSize = 10000;
+                    if ((Math.floor(number / 10000) * 10000) == number){
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 10000) * 10000);
+
+                    }
+                    else {
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 10000) * 10000) + 10000;
+
+                    }
+                }
+                else if (number == 100000){
+                    this.myChart.options.scales.y.ticks.stepSize = 10000;
+                    this.myChart.options.scales.y.max = 100000;
+                }
+                else if (number < 200000){
+                    this.myChart.options.scales.y.ticks.stepSize = 20000;
+                    if ((Math.floor(number / 20000) * 20000) == number){
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 20000) * 20000);
+
+                    }
+                    else {
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 20000) * 20000) + 20000;
+
+                    }
+                }
+                else if (number == 200000){
+                    this.myChart.options.scales.y.ticks.stepSize = 20000;
+                    this.myChart.options.scales.y.max = 200000;
+                }
+                else if (number < 500000){
+                    this.myChart.options.scales.y.ticks.stepSize = 50000;
+                    if ((Math.floor(number / 50000) * 50000) == number){
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 50000) * 50000);
+
+                    }
+                    else {
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 50000) * 50000) + 50000;
+
+                    }
+                }
+                else if (number == 500000){
+                    this.myChart.options.scales.y.ticks.stepSize = 50000;
+                    this.myChart.options.scales.y.max = 500000;
+                }
+                else if (number < 1000000){
+                    this.myChart.options.scales.y.ticks.stepSize = 100000;
+                    if ((Math.floor(number / 100000) * 100000) == number){
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 100000) * 100000);
+
+                    }
+                    else {
+                        this.myChart.options.scales.y.max =  (Math.floor(number / 100000) * 100000) + 100000;
+
+                    }
+                }
+
                 else {
                     this.myChart.options.scales.y.ticks.stepSize = undefined;
                 }

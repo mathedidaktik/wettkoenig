@@ -5,7 +5,8 @@
             <label for="num-rolls" class="text-lg font-medium">Anzahl der Würfe:</label>
             <input v-on:keyup.enter="diceRolled" type="number" id="num-rolls" class="border-gray-300 border rounded-md px-3 py-2 w-full" min="1" max="1000000" v-bind:keyup=enforceMinMax() v-model="numberOfRolls" @input="removeLeadingZeros">
             <label v-if="warningRollsLow" class="text-red-700">Du musst mindestens 1 eingeben.</label>
-            <label v-if="warningRollsHigh" class="text-red-700">Du darfst maximal 1.000.000 eingeben.</label>
+            <label v-if="warningRollsHigh" class="text-red-700">Du darfst maximal 100.000 eingeben.</label>
+            <label v-if="warningRollsMax" class="text-red-700">Die maximale Anzahl der Würfe insgesamt ist 1.000.000.</label>
         </div>
 
         <div class="flex flex-col">
@@ -13,7 +14,7 @@
         </div>
 
         <div class="total-rolls-container marg-top" v-if="this.total||this.percent">
-            <lable>Anzahl der Würfe Insgesamt: {{this.numberOfRollsTotal}}</lable>
+            <lable>Anzahl der Würfe insgesamt: {{this.numberOfRollsTotal}}</lable>
         </div>
 
         <div v-if="this.total||this.percent" ref="container" class="space-y-2 lableContainer marg-top">
@@ -55,16 +56,22 @@
                 this.easy = true;
                 this.total = false;
                 this.percent = false;
+                this.numberOfRolls = 0;
+                this.warningRollsMax = false;
             } 
             if(newVal == Mode.TOTAL) {
                 this.total = true;
                 this.easy = false;
                 this.percent = false;
+                this.numberOfRolls = 0;
+                this.warningRollsMax = false;
             } 
             if(newVal == Mode.PERCENT) {
                 this.percent = true;
                 this.easy = false;
                 this.total = false;
+                this.numberOfRolls = 0;
+                this.warningRollsMax = false;
             } 
         }
     },
@@ -80,6 +87,7 @@
         rolls: [],
         warningRollsHigh: false,
         warningRollsLow: false,
+        warningRollsMax: false,
         diceSidesInfo:  [
             {rank: 0, color:'red', text: 'Rote Seiten: ', classColor: 'redInput' , sides: 7},
             {rank: 1, color:'green', text: 'Grüne Seiten: ', classColor: 'greenInput' , sides: 5},
@@ -100,6 +108,15 @@
                 this.rolls = rolls;
                 return;
             }
+
+            if ((this.numberOfRolls + this.numberOfRollsTotal) > 1000000) {
+                this.warningRollsMax = true;
+                return;
+            }
+            else {
+                this.warningRollsMax = false;
+            }
+                
 
             let rangeRed = 7;
             let rangeGreen = 12;
@@ -127,7 +144,7 @@
         },
         enforceMinMax() {
             
-            if (this.numberOfRolls > 1000000) {
+            if (this.numberOfRolls > 100000) {
                 this.warningRollsHigh = true;
             } 
             else if(this.numberOfRolls > 0) {
