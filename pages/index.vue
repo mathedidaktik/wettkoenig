@@ -355,6 +355,12 @@ export default{
                 this.$refs.dice.setTotalRollsZero();
                 this.setTableToZero();
 
+                if (this.total) {
+                    this.myChart.options.scales.y.ticks.stepSize = 10;
+                    this.myChart.options.scales.y.max = 100;
+                }
+                this.myChart.update();
+
             },
             fixLables(number){
                 if (number < 6){
