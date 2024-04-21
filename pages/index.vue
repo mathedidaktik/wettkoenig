@@ -97,7 +97,7 @@ export default{
                     labels: ['', '', '', ''],
                     datasets: [
                     {
-                        label: 'Würfel',
+                        labels: ['rot', 'grün', 'gelb', 'blau'],
                         backgroundColor: ['rgba(235, 50, 36, 1)', 'rgba(117, 249, 78, 1)', 'rgba(254, 253, 86, 1)', 'rgba(58, 105, 245, 1)'],
                         borderColor: ['rgb(0, 0, 0)', 'rgb(0, 0, 0)', 'rgb(0,0,0)', 'rgb(0, 0, 0)'],
                         borderWidth: 1,
@@ -120,7 +120,30 @@ export default{
                                 title: function (tooltipItems) {
                                     return "Würfe";
                                 },
-                                label: function (context) {  
+                                label: (context) => {  
+                                    var color = context.dataset.backgroundColor[context.dataIndex];
+                                    var value = context.dataset.data[context.dataIndex];
+
+                                    if(this.percent) {
+                                        value = value + "%";
+                                    }
+
+                                    var colorname = "";
+                                    switch(context.dataIndex){
+                                        case 0:
+                                            colorname = "(rot)";
+                                            break;
+                                        case 1:
+                                            colorname = "(grün)";
+                                            break;
+                                        case 2:
+                                            colorname = "(gelb)";
+                                            break;
+                                        case 3:
+                                            colorname = "(blau)";
+                                            break;
+                                    }
+                                    return colorname + ': ' + value;
                                 },
                             },
                             },

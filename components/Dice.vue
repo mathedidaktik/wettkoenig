@@ -157,6 +157,8 @@
         },
         setTotalRollsZero() {
             this.numberOfRollsTotal = 0;
+            this.numberOfRolls = 0;
+            this.warningRollsMax = false;
         }
     }
 }
