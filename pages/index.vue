@@ -48,7 +48,7 @@
     
             </div>
             <div class="flex flex-col space-y-8">
-                <button id="total-button" type="button" @click="resetTable" class="button text-white rounded-md px-4 py-2 mt-4 mb-2">Bei null beginnen</button>
+                <button id="total-button" type="button" @click="resetTable" class="button text-white rounded-md px-4 py-2 mt-4 mb-2">Bei 0 beginnen</button>
             </div>
             <figure class="">
                 <canvas ref="myChart" class="w-full h-full mt-1 chart" :style="{ marginLeft: marginLeft }"></canvas>
@@ -131,16 +131,16 @@ export default{
                                     var colorname = "";
                                     switch(context.dataIndex){
                                         case 0:
-                                            colorname = "(rot)";
+                                            colorname = "rot";
                                             break;
                                         case 1:
-                                            colorname = "(grün)";
+                                            colorname = "grün";
                                             break;
                                         case 2:
-                                            colorname = "(gelb)";
+                                            colorname = "gelb";
                                             break;
                                         case 3:
-                                            colorname = "(blau)";
+                                            colorname = "blau";
                                             break;
                                     }
                                     return colorname + ': ' + value;
