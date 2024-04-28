@@ -117,9 +117,6 @@ export default{
                     plugins:{
                         tooltip: {
                             callbacks: {
-                                title: function (tooltipItems) {
-                                    return "Würfe";
-                                },
                                 label: (context) => {  
                                     var color = context.dataset.backgroundColor[context.dataIndex];
                                     var value = context.dataset.data[context.dataIndex];
