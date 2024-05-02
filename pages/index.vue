@@ -280,7 +280,7 @@ export default{
                 ]
             
                 if (this.percent){
-                    var newData = [((this.diceResults[1].ameise/ this.numberOfRollsTotal) * 100).toFixed(), ((this.diceResults[1].frosch/ this.numberOfRollsTotal) * 100).toFixed(), ((this.diceResults[1].schnecke/ this.numberOfRollsTotal) * 100).toFixed(), ((this.diceResults[1].igel/ this.numberOfRollsTotal) * 100).toFixed()];
+                    var newData = [((this.diceResults[1].ameise/ this.numberOfRollsTotal) * 100).toFixed(2), ((this.diceResults[1].frosch/ this.numberOfRollsTotal) * 100).toFixed(2), ((this.diceResults[1].schnecke/ this.numberOfRollsTotal) * 100).toFixed(2), ((this.diceResults[1].igel/ this.numberOfRollsTotal) * 100).toFixed(2)];
                 } 
                 else if (this.easy) {
                     var newData = allData.map(data => data.rolls);
