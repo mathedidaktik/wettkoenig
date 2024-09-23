@@ -12,7 +12,7 @@
 
 
 .blueInput {
-  background-color: rgba(58, 105, 245, 1);
+  background-color: rgba(69, 127, 184, 1);
   border: 3px solid rgba(0, 0, 0, 1);
   padding: 3px;
   padding-left: 8px;
@@ -23,7 +23,7 @@
 }
 
 .redInput {
-  background-color: rgba(235, 50, 36, 1);
+  background-color: rgba(211, 61, 46, 1);
   border: 3px solid rgba(0, 0, 0, 1);
   padding: 3px;
   padding-left: 8px;
@@ -34,7 +34,7 @@
 }
 
 .yellowInput {
-  background-color: rgba(254, 253, 86, 1);
+  background-color: rgba(238, 228, 106, 1);
   border: 3px solid rgba(0, 0, 0, 1);
   padding: 3px;
   padding-left: 8px;
@@ -77,7 +77,7 @@ html,body, #__nuxt, #__layout{
 }
 
 .ameise {
-  background-color: rgba(235, 50, 36, 1);
+  background-color: rgba(211, 61, 46, 1);
   border: 1px solid;
 }
 
@@ -87,12 +87,12 @@ html,body, #__nuxt, #__layout{
 }
 
 .schnecke {
-  background-color: rgba(254, 253, 86, 1);
+  background-color: rgba(238, 228, 106, 1);
   border: 1px solid;
 }
 
 .igel {
-  background-color: rgba(58, 105, 245, 1);
+  background-color: rgba(69, 127, 184, 1);
   border: 1px solid;
 
 }
