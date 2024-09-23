@@ -98,7 +98,7 @@ export default{
                     datasets: [
                     {
                         labels: ['rot', 'grün', 'gelb', 'blau'],
-                        backgroundColor: ['rgba(235, 50, 36, 1)', 'rgba(165, 188, 67, 1);', 'rgba(254, 253, 86, 1)', 'rgba(58, 105, 245, 1)'],
+                        backgroundColor: ['rgba(235, 50, 36, 1)', 'rgba(165, 188, 67, 1)', 'rgba(254, 253, 86, 1)', 'rgba(58, 105, 245, 1)'],
                         borderColor: ['rgb(0, 0, 0)', 'rgb(0, 0, 0)', 'rgb(0,0,0)', 'rgb(0, 0, 0)'],
                         borderWidth: 1,
                         data: [0, 0, 0, 0],
