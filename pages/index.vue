@@ -654,6 +654,8 @@ export default{
 
             document.getElementById("y-dice-control-container").style.visibility = "hidden";
             document.getElementById("canvas-container").style.visibility = "hidden";
+            
+            this.clickEasy();
         }
 
        
