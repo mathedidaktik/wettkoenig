@@ -5,8 +5,10 @@
             <div class="header-container flex w-full">
                 <div class="buttons-container flex flex-row rounded-md px-4 p-4 m-0 mt-2 ml-4 mr-2">
                     <button class="button-top" :class="[backgroundColor, this.easy ? 'button-on' : '',]" @click="clickEasy">Wettkönig</button>
+<!--
                     <button class="button-top" :class="[backgroundColor, this.total ? 'button-on' : '',]" @click="clickTotal">absolut</button>
                     <button class="button-top" :class="[backgroundColor, this.percent ? 'button-on' : '',]" @click="clickPercent">prozentual</button>
+-->
                 </div>
             </div>
             <div id="y-dice-control-container" class="dice marg">
