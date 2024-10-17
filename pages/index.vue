@@ -14,8 +14,7 @@
             <div id="y-dice-control-container" class="dice marg">
                 <Dice :default="modeData" ref="dice" @rollDice="rollDice"></Dice>
             </div>
-            <div id="ikosaeder">
-            </div>
+            <iframe src="https://vmits0710.vm.ruhr-uni-bochum.de/projekte/ikosaeder/" style="width:400px;height:400px;"></iframe>
         </div>
 
         
