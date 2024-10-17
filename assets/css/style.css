@@ -244,3 +244,9 @@ html,body, #__nuxt, #__layout{
 .marg-top {
   margin-top: 20px;
 }
+
+#ikosaeder {
+  width:400px;
+  height:400px;
+  border:1px solid black;
+}

@@ -14,6 +14,8 @@
             <div id="y-dice-control-container" class="dice marg">
                 <Dice :default="modeData" ref="dice" @rollDice="rollDice"></Dice>
             </div>
+            <div id="ikosaeder">
+            </div>
         </div>
 
         
