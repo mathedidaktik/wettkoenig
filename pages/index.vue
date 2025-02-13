@@ -14,8 +14,8 @@
             <div id="y-dice-control-container" class="dice marg">
                 <Dice :default="modeData" ref="dice" @rollDice="rollDice"></Dice>
             </div>
-            <p>Du kannst Dir den Würfel durch drehen und zoomen genauer anschauen</p>
-            <iframe src="https://vmits0710.vm.ruhr-uni-bochum.de/projekte/ikosaeder/" style="width:300px;height:300px;"></iframe>
+            <p style="margin-top:50px;">Du kannst dir den Würfel durch Drehen und Zoomen genauer anschauen.</p>
+            <iframe src="https://vmits0710.vm.ruhr-uni-bochum.de/projekte/ikosaeder/" style="width:300px;height:300px;margin-left:100px;"></iframe>
         </div>
 
         
