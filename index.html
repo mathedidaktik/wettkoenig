@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wettkönig</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">    
+        <main>
+            <div class="simulation-container">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="rolls">Anzahl der Würfe:</label>
+                        <input type="number" id="rolls" value="1000" min="1" max="10000">
+                    </div>
+                    <button id="roll-button">Würfeln</button>
+                    <p>Mit diesem Würfel wird gewürfelt:</p>
+                    <iframe src="https://vmits0710.vm.ruhr-uni-bochum.de/projekte/ikosaeder/"></iframe>
+                </div>
+                
+                <div class="results-section">
+                    <table class="animals-table">
+                        <thead>
+                            <tr class="images-row">
+                                <th></th>
+                                <th>
+                                    <img src="images/rot.png" alt="Ameise">
+                                </th>
+                                <th>
+                                    <img src="images/gruen.png" alt="Frosch">
+                                </th>
+                                <th>
+                                    <img src="images/gelb.png" alt="Schnecke">
+                                </th>
+                                <th>
+                                    <img src="images/blau.png" alt="Igel">
+                                </th>
+                            </tr>
+                            <tr class="names-row">
+                                <th>Tiere</th>
+                                <th class="ameise-header">Ameise</th>
+                                <th class="frosch-header">Frosch</th>
+                                <th class="schnecke-header">Schnecke</th>
+                                <th class="igel-header">Igel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Stand</td>
+                                <td class="ameise-cell" id="ameise-count">0</td>
+                                <td class="frosch-cell" id="frosch-count">0</td>
+                                <td class="schnecke-cell" id="schnecke-count">0</td>
+                                <td class="igel-cell" id="igel-count">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="chart-container">
+                        <canvas id="results-chart"></canvas>
+                    </div>
+                    
+                    <table class="animal-icons-table">
+                        <tr>
+                            <td></td>
+                            <td><img src="images/rot.png" alt="Ameise"></td>
+                            <td><img src="images/gruen.png" alt="Frosch"></td>
+                            <td><img src="images/gelb.png" alt="Schnecke"></td>
+                            <td><img src="images/blau.png" alt="Igel"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

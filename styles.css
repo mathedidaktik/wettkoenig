@@ -1,0 +1,174 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+.header-button {
+    background-color: #8BC34A;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.simulation-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 350px;
+    margin-right:50px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.input-group label {
+    font-weight: bold;
+}
+
+.input-group input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#roll-button {
+    background-color: #1a3a5f;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#roll-button:hover {
+    background-color: #2c5282;
+}
+
+.results-section {
+    margin-top: 20px;
+}
+
+.animals-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    table-layout: fixed;
+}
+
+.animals-table th, .animals-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.animals-table th {
+    font-weight: bold;
+}
+
+.animals-table th:first-child, .animals-table td:first-child {
+    width: 100px;
+}
+
+.animals-table .images-row th,  .animals-table .images-row td{
+    border:none;
+}
+
+.animals-table .images-row img {
+    height: 80px;
+    vertical-align: middle;
+    object-fit: contain;
+}
+
+.ameise-header, .ameise-cell {
+    background-color: #d33d2e;
+}
+
+.frosch-header, .frosch-cell {
+    background-color: #a5bc43;
+}
+
+.schnecke-header, .schnecke-cell {
+    background-color: #eee46a;
+}
+
+.igel-header, .igel-cell {
+    background-color: #75bcd1;
+}
+
+.chart-container {
+    height: 300px;
+    margin-left: 75px;
+}
+
+.animal-icons-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.animal-icons-table td {
+    text-align: center;
+    border: none;
+    padding: 5px;
+}
+
+.animal-icons-table td:first-child {
+    width: 100px;
+}
+
+.animal-icons-table img {
+    height: 80px;
+    object-fit: contain;
+}
+
+@media (min-width: 768px) {
+    .simulation-container {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    
+    .input-section {
+        flex: 1;
+    }
+    
+    .results-section {
+        flex: 2;
+        margin-top: 0;
+    }
+}
+
+iframe {
+    width:350px;
+    height:350px;
+    border:none;
+}

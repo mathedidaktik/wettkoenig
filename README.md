@@ -1,48 +1,18 @@
 # Wettkönig
 
-## License
-This project is licensed under MIT License, see License.txt for details.
+Eine interaktive Webanwendung, die Würfe mit einem 20-seitigen Würfel mit verschiedenen Farben simuliert.
 
+## Funktionen
 
-## Nuxt 3 Minimal Starter
+- Simulation eines 20-seitigen Würfels mit folgender Farbverteilung:
+  - 7 rote Seiten (Ameise)
+  - 5 grüne Seiten (Frosch)
+  - 5 gelbe Seiten (Schnecke)
+  - 3 blaue Seiten (Igel)
+- Einstellbare Anzahl der Würfelwürfe
+- Visualisierung der Ergebnisse in einer übersichtlichen Tabelle
+- Grafische Darstellung der Ergebnisse als animiertes Balkendiagramm
+- Zufällige Simulation der Würfelwürfe
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
-
-### Setup
-
-Make sure to install the dependencies:
-
-```bash
-# yarn
-yarn install
-
-# npm
-npm install
-
-# pnpm
-pnpm install
-```
-
-### Development Server
-
-Start the development server on `http://localhost:3000`
-
-```bash
-npm run dev
-```
-
-### Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Lizenz
+Dieses Projekt steht unter der MIT-Lizenz, siehe LICENCE für Details.
