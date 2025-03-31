@@ -76,6 +76,32 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Bitte geben Sie eine gültige Anzahl von Würfen ein.');
             return;
         }
+        
+        const chartContainer = document.getElementsByClassName('chart-container')[0];
+          
+        // Fallunterscheidung basierend auf der Größenordnung von numRolls
+        if (numRolls < 10) {
+          // weniger als 10 Würfe
+          chartContainer.style.marginLeft = "70px";
+        } else if (numRolls < 100) {
+          // zwischen 10 und 99 Würfe
+          chartContainer.style.marginLeft = "74px";
+        } else if (numRolls < 1000) {
+          // zwischen 100 und 999 Würfe
+          chartContainer.style.marginLeft = "66px";
+        } else if (numRolls < 10000) {
+          // zwischen 1000 und 9999 Würfe
+          chartContainer.style.marginLeft = "57px";
+        } else if (numRolls < 100000) {
+          // zwischen 10000 und 99999 Würfe
+          chartContainer.style.marginLeft = "50px";
+        } else if (numRolls < 1000000) {
+          // zwischen 100000 und 999999 Würfe
+          chartContainer.style.marginLeft = "43px";
+        } else {
+          // 1000000 Würfe
+          chartContainer.style.marginLeft = "36px";
+        }
 
         // Erst Diagramm leeren
         chart.data.datasets[0].data = [0, 0, 0, 0];
