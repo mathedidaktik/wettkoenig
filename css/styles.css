@@ -41,6 +41,7 @@ header {
     gap: 15px;
     max-width: 350px;
     margin-right:50px;
+    margin-top: 75px;
 }
 
 .input-group {
@@ -59,6 +60,10 @@ header {
     border-radius: 5px;
 }
 
+#max-info {
+    font-size:small;
+}
+
 #roll-button {
     background-color: #1a3a5f;
     color: white;
@@ -68,6 +73,7 @@ header {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size:large;
 }
 
 #roll-button:hover {
@@ -128,6 +134,7 @@ header {
 .chart-container {
     height: 300px;
     margin-left: 75px;
+    margin-top: 70px;
 }
 
 .animal-icons-table {

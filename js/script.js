@@ -29,7 +29,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     data: [0, 0, 0, 0],
                     backgroundColor: animals.map(animal => animal.color),
                     borderColor: animals.map(animal => animal.color),
-                    borderWidth: 1
+                    borderWidth: 1,
+                    barPercentage: 1.0,
+                    categoryPercentage: 1.0
                 }]
             },
             options: {
@@ -70,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Roll dice function
     function rollDice() {
         const numRolls = parseInt(rollsInput.value);
-        if (isNaN(numRolls) || numRolls <= 0) {
+        if (isNaN(numRolls) || numRolls <= 0 || numRolls > 1000000) {
             alert('Bitte geben Sie eine gültige Anzahl von Würfen ein.');
             return;
         }
@@ -148,5 +150,5 @@ document.addEventListener('DOMContentLoaded', function() {
     rollButton.addEventListener('click', rollDice);
     
     // Initial roll
-    rollDice();
+    //rollDice();
 });
